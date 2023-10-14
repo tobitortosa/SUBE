@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,12 +15,18 @@ namespace Interface
 {
     public partial class SuperAdmin : Form
     {
+        private List<Person> _persons;
+        private List<Person> _allPersons;
+        private Person _selectedPerson;
+
+        private string ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
+        private string nombreArchivo = @"\personas.xml";
         public SuperAdmin()
         {
             InitializeComponent();
 
-            List<Person> persons;
-            persons = new List<Person>();
+            Persons = new List<Person>();
+            AllPersons = new List<Person>();
 
             string nombreArchivo;
             string ruta;
@@ -29,8 +36,8 @@ namespace Interface
             nombreArchivo = @"\personas.xml";
             path = ruta + nombreArchivo;
 
-            persons = Serializadora.LeerPersonaXML(path);
-
+            Persons = Serializadora.LeerPersonaXML(path);
+            AllPersons = Serializadora.LeerPersonaXML(path);
 
             // Create an unbound DataGridView by declaring a column count.
             dataGridView1.ColumnCount = 4;
@@ -48,41 +55,63 @@ namespace Interface
 
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.None;
 
-            foreach (Person person in persons)
+            foreach (Person person in AllPersons)
             {
                 string[] rowArray = new string[] { person.Nombre, person.Apellido, person.Username, person.IsAdmin.ToString() };
                 dataGridView1.Rows.Add(rowArray);
             }
 
-
-
+            SelectedPerson = Persons[0];
         }
 
+        public List<Person> Persons { get => _persons; set => _persons = value; }
+        public Person SelectedPerson { get => _selectedPerson; set => _selectedPerson = value; }
+        public List<Person> AllPersons { get => _allPersons; set => _allPersons = value; }
 
-
-        private void dataGridView1_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
+            int index;
+            index = e.RowIndex;
+            SelectedPerson = Persons[index];
+        }
+
+        private void btnHacerAdmin_Click(object sender, EventArgs e)
+        {
+            string path = ruta + nombreArchivo;
+            SelectedPerson.IsAdmin = true;
+            Serializadora.EscribirPersonaXML(path, Persons);
+            Persons = Serializadora.LeerPersonaXML(path);
+        }
+
+        private void txtBuscarPersona_TextChanged(object sender, EventArgs e)
+        {
+            string input = txtBuscarPersona.Text.ToUpper();
+            List<Person> listaFiltrada = new List<Person>();
+
+            Persons = AllPersons;
+            foreach (Person person in Persons)
             {
-                int rowSelected = e.RowIndex;
-                if (e.RowIndex != -1)
+                if (person.Username.ToUpper().Contains(input) || person.Nombre.ToUpper().Contains(input) || person.Apellido.ToUpper().Contains(input))
                 {
-                    this.dataGridView1.ClearSelection();
-                    this.dataGridView1.Rows[rowSelected].Selected = true;
+                    listaFiltrada.Add(person);
                 }
-                // you now have the selected row with the context menu showing for the user to delete etc.
+            }
+            Persons = listaFiltrada;
+
+            dataGridView1.Rows.Clear();
+            foreach (Person person in Persons)
+            {
+                string[] rowArray = new string[] { person.Nombre, person.Apellido, person.Username, person.IsAdmin.ToString() };
+                dataGridView1.Rows.Add(rowArray);
             }
         }
 
-        private void dataGridView1_MouseDown(object sender, MouseEventArgs e)
+        private void btnEliminarAdmin_Click(object sender, EventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-            {
-                var hti = dataGridView1.HitTest(e.X, e.Y);
-                dataGridView1.Rows[hti.RowIndex].Selected = true;
-                dataGridView1.Rows.RemoveAt(2);
-                dataGridView1.ClearSelection();
-            }
+            string path = ruta + nombreArchivo;
+            SelectedPerson.IsAdmin = false;
+            Serializadora.EscribirPersonaXML(path, Persons);
+            Persons = Serializadora.LeerPersonaXML(path);
         }
     }
 }
