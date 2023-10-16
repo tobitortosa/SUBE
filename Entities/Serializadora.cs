@@ -55,6 +55,5 @@ namespace Entities
 
             return lista;
         }
-
     }
 }

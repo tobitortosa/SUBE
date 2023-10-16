@@ -33,8 +33,6 @@ namespace Interface {
 
             Console.WriteLine(isNumber);
 
-
-
             if (isNumber && input.Length <= 16)
             {
                 finalString = separarNumerosTarjetas(input);

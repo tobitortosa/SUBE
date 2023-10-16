@@ -12,22 +12,43 @@ namespace Entities
        // private DateOnly _createdDate;
         private string _numeroDeTarjeta;
         private string _codigoDeSeguridad;
-        private string _username;
+        private string _usernameAdminCreador;
         private double _saldo;
         private bool _activada;
+        private DateTime _diaCreada;
 
         public Sube()
         {
             
         }
 
-        public Sube(string numeroDeTarjeta, string codigoDeSeguridad)
+        public Sube(string numeroDeTarjeta, string codigoDeSeguridad, string adminCreador)
         {
             NumeroDeTarjeta = numeroDeTarjeta;
             CodigoDeSeguridad = codigoDeSeguridad;
             Activada = false;
-            Username = "";
+            UsernameAdminCreador = adminCreador;
             Saldo = 500;
+            DiaCreada = DateTime.Now;
+        }
+
+        public static void CrearSube(Sube sube)
+        {
+            List<Sube> listaCompleta;
+            string ruta;
+            string path;
+            string nombreArchivo;
+
+            ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
+            nombreArchivo = @"\subes.xml";
+            path = ruta + nombreArchivo;
+
+            FileExist(path);
+
+            listaCompleta = Serializadora.LeerSubeXML(path);
+
+            listaCompleta.Add(sube);
+            Serializadora.EscribirSubeXML(path, listaCompleta);
         }
 
         public static bool ActivarSube(Sube sube)
@@ -67,7 +88,7 @@ namespace Entities
             return res;
         }
 
-        private static void FileExist(string path)
+        public static void FileExist(string path)
         {
             List<Sube> listaVacia;
             listaVacia = new List<Sube>();
@@ -78,9 +99,10 @@ namespace Entities
             }
         }
         public string NumeroDeTarjeta { get => _numeroDeTarjeta; set => _numeroDeTarjeta = value; }
-        public string Username { get => _username; set => _username = value; }
+        public string UsernameAdminCreador { get => _usernameAdminCreador; set => _usernameAdminCreador = value; }
         public double Saldo { get => _saldo; set => _saldo = value; }
         public string CodigoDeSeguridad { get => _codigoDeSeguridad; set => _codigoDeSeguridad = value; }
         public bool Activada { get => _activada; set => _activada = value; }
+        public DateTime DiaCreada { get => _diaCreada; set => _diaCreada = value; }
     }
 }

@@ -43,15 +43,26 @@ namespace Interface
             dataGridView1.ColumnCount = 4;
 
             // Set the column header style.
-            DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
 
+            DataGridViewCellStyle columnHeaderStyle = new DataGridViewCellStyle();
             dataGridView1.ColumnHeadersDefaultCellStyle = columnHeaderStyle;
+
 
             // Set the column header names.
             dataGridView1.Columns[0].Name = "Nombre";
             dataGridView1.Columns[1].Name = "Apellido";
             dataGridView1.Columns[2].Name = "Username";
             dataGridView1.Columns[3].Name = "Es Admin";
+
+            dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            dataGridView1.RowHeadersVisible = false;
+
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            dataGridView1.AllowUserToResizeRows = false;
 
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.None;
 
@@ -72,7 +83,11 @@ namespace Interface
         {
             int index;
             index = e.RowIndex;
-            SelectedPerson = Persons[index];
+
+            if (Persons.Count != index && index >= 0)
+            {
+                SelectedPerson = Persons[index];
+            }
         }
 
         private void btnHacerAdmin_Click(object sender, EventArgs e)
@@ -80,7 +95,22 @@ namespace Interface
             string path = ruta + nombreArchivo;
             SelectedPerson.IsAdmin = true;
             Serializadora.EscribirPersonaXML(path, Persons);
-            Persons = Serializadora.LeerPersonaXML(path);
+
+            dataGridView1.Rows.Clear();
+
+            foreach (Person person in Persons)
+            {
+                if (person == SelectedPerson)
+                {
+                    person.IsAdmin = true;
+                }
+
+                string[] rowArray = new string[] { person.Nombre, person.Apellido, person.Username, person.IsAdmin.ToString() };
+                dataGridView1.Rows.Add(rowArray);
+            }
+
+            dataGridView1.ClearSelection();
+            dataGridView1.Rows[Persons.IndexOf(SelectedPerson)].Selected = true;
         }
 
         private void txtBuscarPersona_TextChanged(object sender, EventArgs e)
@@ -111,7 +141,22 @@ namespace Interface
             string path = ruta + nombreArchivo;
             SelectedPerson.IsAdmin = false;
             Serializadora.EscribirPersonaXML(path, Persons);
-            Persons = Serializadora.LeerPersonaXML(path);
+
+            dataGridView1.Rows.Clear();
+
+            foreach (Person person in Persons)
+            {
+                if (person == SelectedPerson)
+                {
+                    person.IsAdmin = false;
+                }
+
+                string[] rowArray = new string[] { person.Nombre, person.Apellido, person.Username, person.IsAdmin.ToString() };
+                dataGridView1.Rows.Add(rowArray);
+            }
+
+            dataGridView1.ClearSelection();
+            dataGridView1.Rows[Persons.IndexOf(SelectedPerson)].Selected = true;
         }
     }
 }
