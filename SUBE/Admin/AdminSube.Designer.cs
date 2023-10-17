@@ -35,7 +35,7 @@
             btnEditarSube = new Button();
             pictureBox1 = new PictureBox();
             lblSaldo = new Label();
-            lblNombreCompleto = new Label();
+            lblUsuarioPropietario = new Label();
             lblNumeroSube = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvSubes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -111,15 +111,17 @@
             lblSaldo.Size = new Size(36, 17);
             lblSaldo.TabIndex = 21;
             lblSaldo.Text = "$999";
+            lblSaldo.Click += lblSaldo_Click;
             // 
-            // lblNombreCompleto
+            // lblUsuarioPropietario
             // 
-            lblNombreCompleto.AutoSize = true;
-            lblNombreCompleto.Location = new Point(28, 513);
-            lblNombreCompleto.Name = "lblNombreCompleto";
-            lblNombreCompleto.Size = new Size(98, 15);
-            lblNombreCompleto.TabIndex = 20;
-            lblNombreCompleto.Text = "Nombre Apellido";
+            lblUsuarioPropietario.AutoSize = true;
+            lblUsuarioPropietario.Location = new Point(28, 513);
+            lblUsuarioPropietario.Name = "lblUsuarioPropietario";
+            lblUsuarioPropietario.Size = new Size(98, 15);
+            lblUsuarioPropietario.TabIndex = 20;
+            lblUsuarioPropietario.Text = "Nombre Apellido";
+            lblUsuarioPropietario.Click += lblUsuarioPropietario_Click;
             // 
             // lblNumeroSube
             // 
@@ -134,6 +136,7 @@
             lblNumeroSube.TabIndex = 19;
             lblNumeroSube.Text = "0000 0000 0000 0000";
             lblNumeroSube.TextAlign = ContentAlignment.MiddleCenter;
+            lblNumeroSube.Click += lblNumeroSube_Click;
             // 
             // AdminSube
             // 
@@ -141,7 +144,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(760, 579);
             Controls.Add(lblSaldo);
-            Controls.Add(lblNombreCompleto);
+            Controls.Add(lblUsuarioPropietario);
             Controls.Add(lblNumeroSube);
             Controls.Add(pictureBox1);
             Controls.Add(btnEditarSube);
@@ -153,6 +156,7 @@
             Name = "AdminSube";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AdminSube";
+            Load += AdminSube_Load;
             ((System.ComponentModel.ISupportInitialize)dgvSubes).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
@@ -168,7 +172,7 @@
         private Button btnEditarSube;
         private PictureBox pictureBox1;
         private Label lblSaldo;
-        private Label lblNombreCompleto;
+        private Label lblUsuarioPropietario;
         private Label lblNumeroSube;
     }
 }

@@ -41,24 +41,30 @@ namespace SUBE
                 }
                 else
                 {
-                    if(logPerson.Username == "sa" && logPerson.Password == "sa")
+                    if (logPerson.Username == "sa" && logPerson.Password == "sa")
                     {
-                        SuperAdmin superAdmin = new SuperAdmin();    
+                        SuperAdmin superAdmin = new SuperAdmin();
                         superAdmin.Show();
                         this.Hide();
-                    } 
+                    }
                     else if (logPerson.IsAdmin)
                     {
                         AdminMenu adminMenu = new AdminMenu(logPerson);
                         adminMenu.Show();
                         this.Hide();
-                    } 
+                    }
                     else
                     {
                         Menu menu = new Menu(logPerson);
                         menu.Show();
                         this.Hide();
                     }
+
+                    string ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
+                    string nombreArchivo = @"\personaLogueada.json";
+                    string path = ruta + nombreArchivo;
+
+                    Serializadora.EscribirJson(path, logPerson);
                 }
             }
             catch (Exception ex)
@@ -76,6 +82,19 @@ namespace SUBE
         private void txtPassword_TextChanged(object sender, EventArgs e)
         {
             lblError.Text = "";
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            Person personaLogueada;
+            string ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
+            string nombreArchivo = @"\personaLogueada.json";
+            string path = ruta + nombreArchivo;
+
+            personaLogueada = Serializadora.LeerJson(path);
+
+            txtUser.Text = personaLogueada.Username;
+            txtPassword.Text = personaLogueada.Password;
         }
     }
 }

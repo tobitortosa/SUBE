@@ -100,7 +100,7 @@ namespace Entities
             return (logStatus, logPerson);
         }
 
-        private static void FileExist(string path)
+        public static void FileExist(string path)
         {
             List<Person> listaVacia;
             listaVacia = new List<Person>();

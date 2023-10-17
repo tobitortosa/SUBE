@@ -30,11 +30,13 @@
         {
             label1 = new Label();
             groupBox1 = new GroupBox();
+            lblActivada = new Label();
+            lblError = new Label();
             txtContraseña = new TextBox();
             label9 = new Label();
             txtNombreUsuario = new TextBox();
             label8 = new Label();
-            button1 = new Button();
+            btnHandleActivar = new Button();
             txtCodigoSeguridad = new TextBox();
             label3 = new Label();
             txtNumeroTarjeta = new TextBox();
@@ -56,7 +58,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(6, 52);
+            label1.Location = new Point(8, 52);
             label1.Name = "label1";
             label1.Size = new Size(169, 15);
             label1.TabIndex = 0;
@@ -64,11 +66,13 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(lblActivada);
+            groupBox1.Controls.Add(lblError);
             groupBox1.Controls.Add(txtContraseña);
             groupBox1.Controls.Add(label9);
             groupBox1.Controls.Add(txtNombreUsuario);
             groupBox1.Controls.Add(label8);
-            groupBox1.Controls.Add(button1);
+            groupBox1.Controls.Add(btnHandleActivar);
             groupBox1.Controls.Add(txtCodigoSeguridad);
             groupBox1.Controls.Add(label3);
             groupBox1.Controls.Add(txtNumeroTarjeta);
@@ -80,17 +84,40 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Ingreso de datos";
             // 
+            // lblActivada
+            // 
+            lblActivada.ForeColor = Color.Chartreuse;
+            lblActivada.Location = new Point(6, 285);
+            lblActivada.Name = "lblActivada";
+            lblActivada.Size = new Size(203, 19);
+            lblActivada.TabIndex = 13;
+            lblActivada.Text = "Creada";
+            lblActivada.TextAlign = ContentAlignment.TopCenter;
+            lblActivada.Visible = false;
+            // 
+            // lblError
+            // 
+            lblError.ForeColor = Color.Red;
+            lblError.Location = new Point(6, 285);
+            lblError.Name = "lblError";
+            lblError.Size = new Size(203, 19);
+            lblError.TabIndex = 11;
+            lblError.Text = "Error";
+            lblError.TextAlign = ContentAlignment.TopCenter;
+            lblError.Visible = false;
+            // 
             // txtContraseña
             // 
             txtContraseña.Location = new Point(6, 250);
             txtContraseña.Name = "txtContraseña";
+            txtContraseña.PasswordChar = '*';
             txtContraseña.Size = new Size(203, 23);
             txtContraseña.TabIndex = 10;
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(8, 232);
+            label9.Location = new Point(6, 232);
             label9.Name = "label9";
             label9.Size = new Size(124, 15);
             label9.TabIndex = 9;
@@ -112,14 +139,15 @@
             label8.TabIndex = 7;
             label8.Text = "Ingrese su nombre de usuario:";
             // 
-            // button1
+            // btnHandleActivar
             // 
-            button1.Location = new Point(38, 321);
-            button1.Name = "button1";
-            button1.Size = new Size(137, 23);
-            button1.TabIndex = 3;
-            button1.Text = "ACTIVAR SUBE";
-            button1.UseVisualStyleBackColor = true;
+            btnHandleActivar.Location = new Point(6, 321);
+            btnHandleActivar.Name = "btnHandleActivar";
+            btnHandleActivar.Size = new Size(203, 23);
+            btnHandleActivar.TabIndex = 3;
+            btnHandleActivar.Text = "ACTIVAR SUBE";
+            btnHandleActivar.UseVisualStyleBackColor = true;
+            btnHandleActivar.Click += btnHandleActivar_Click;
             // 
             // txtCodigoSeguridad
             // 
@@ -127,11 +155,12 @@
             txtCodigoSeguridad.Name = "txtCodigoSeguridad";
             txtCodigoSeguridad.Size = new Size(203, 23);
             txtCodigoSeguridad.TabIndex = 6;
+            txtCodigoSeguridad.TextChanged += txtCodigoSeguridad_TextChanged;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(6, 114);
+            label3.Location = new Point(8, 114);
             label3.Name = "label3";
             label3.Size = new Size(171, 15);
             label3.TabIndex = 4;
@@ -141,7 +170,7 @@
             // 
             txtNumeroTarjeta.Location = new Point(6, 70);
             txtNumeroTarjeta.Name = "txtNumeroTarjeta";
-            txtNumeroTarjeta.Size = new Size(205, 23);
+            txtNumeroTarjeta.Size = new Size(203, 23);
             txtNumeroTarjeta.TabIndex = 2;
             txtNumeroTarjeta.TextChanged += txtNumeroTarjeta_TextChanged;
             // 
@@ -166,7 +195,7 @@
             lblSaldoSUBE.Name = "lblSaldoSUBE";
             lblSaldoSUBE.Size = new Size(36, 17);
             lblSaldoSUBE.TabIndex = 14;
-            lblSaldoSUBE.Text = "$999";
+            lblSaldoSUBE.Text = "$500";
             // 
             // lblNombreCompletoSUBE
             // 
@@ -284,7 +313,7 @@
         private TextBox txtNumeroTarjeta;
         private GroupBox groupBox2;
         private TextBox txtCodigoSeguridad;
-        private Button button1;
+        private Button btnHandleActivar;
         private Label label4;
         private Label label5;
         private TextBox txtContraseña;
@@ -298,5 +327,7 @@
         private Label lblNumeroTarjetaSUBE;
         private PictureBox pictureBox1;
         private Label label11;
+        private Label lblError;
+        private Label lblActivada;
     }
 }

@@ -15,11 +15,16 @@ namespace Entities
         private string _usernameAdminCreador;
         private double _saldo;
         private bool _activada;
+        private string _nombreCompletoPropietario;
+        private string _usernamePropietario;
         private DateTime _diaCreada;
+        private string _ruta;
+        private string _nombreArchivo;
+        private string _path;
 
         public Sube()
         {
-            
+           
         }
 
         public Sube(string numeroDeTarjeta, string codigoDeSeguridad, string adminCreador)
@@ -30,62 +35,31 @@ namespace Entities
             UsernameAdminCreador = adminCreador;
             Saldo = 500;
             DiaCreada = DateTime.Now;
+            NombreCompletoPropietario = "";
+            UsernamePropietario = "";
+        }
+        public static List<Sube> ListaCompleta()
+        {
+            string ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
+            string nombreArchivo = @"\subes.xml";
+            string path = ruta + nombreArchivo;
+
+            List<Sube> lista;
+            lista = Serializadora.LeerSubeXML(path);
+            FileExist(path);
+            return lista;
         }
 
         public static void CrearSube(Sube sube)
         {
+            string ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
+            string nombreArchivo = @"\subes.xml";
+            string path = ruta + nombreArchivo;
+
             List<Sube> listaCompleta;
-            string ruta;
-            string path;
-            string nombreArchivo;
-
-            ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
-            nombreArchivo = @"\subes.xml";
-            path = ruta + nombreArchivo;
-
-            FileExist(path);
-
-            listaCompleta = Serializadora.LeerSubeXML(path);
-
+            listaCompleta = ListaCompleta();
             listaCompleta.Add(sube);
             Serializadora.EscribirSubeXML(path, listaCompleta);
-        }
-
-        public static bool ActivarSube(Sube sube)
-        {
-            List<Sube> listaCompleta;
-
-            string ruta;
-            string path;
-            bool res;
-            string nombreArchivo;
-
-            ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
-            nombreArchivo = @"\subes.xml";
-            path = ruta + nombreArchivo;
-            res = false;
-
-            FileExist(path);
-
-            listaCompleta = Serializadora.LeerSubeXML(path);
-
-            foreach (Sube s in listaCompleta)
-            {
-                if (sube.NumeroDeTarjeta == s.NumeroDeTarjeta && sube.CodigoDeSeguridad == s.CodigoDeSeguridad)
-                {
-                    s.Activada = true;
-                    res = false;
-                }
-            }
-
-            /*if (!res)
-            {
-                listaCompleta.Add(sube);
-                Serializadora.EscribirSubeXML(path, listaCompleta);
-
-            }*/
-
-            return res;
         }
 
         public static void FileExist(string path)
@@ -98,11 +72,17 @@ namespace Entities
                 Serializadora.EscribirSubeXML(path, listaVacia);
             }
         }
+
         public string NumeroDeTarjeta { get => _numeroDeTarjeta; set => _numeroDeTarjeta = value; }
         public string UsernameAdminCreador { get => _usernameAdminCreador; set => _usernameAdminCreador = value; }
         public double Saldo { get => _saldo; set => _saldo = value; }
         public string CodigoDeSeguridad { get => _codigoDeSeguridad; set => _codigoDeSeguridad = value; }
         public bool Activada { get => _activada; set => _activada = value; }
         public DateTime DiaCreada { get => _diaCreada; set => _diaCreada = value; }
+        public string NombreCompletoPropietario { get => _nombreCompletoPropietario; set => _nombreCompletoPropietario = value; }
+        public string UsernamePropietario { get => _usernamePropietario; set => _usernamePropietario = value; }
+        public string Ruta { get => _ruta; set => _ruta = value; }
+        public string NombreArchivo { get => _nombreArchivo; set => _nombreArchivo = value; }
+        public string Path { get => _path; set => _path = value; }
     }
 }

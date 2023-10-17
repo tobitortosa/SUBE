@@ -32,12 +32,14 @@
             menuToolStripMenuItem = new ToolStripMenuItem();
             activarSubeToolStripMenuItem = new ToolStripMenuItem();
             perfilToolStripMenuItem = new ToolStripMenuItem();
+            viajarToolStripMenuItem = new ToolStripMenuItem();
+            cerrarSecionToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem, activarSubeToolStripMenuItem, perfilToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem, activarSubeToolStripMenuItem, perfilToolStripMenuItem, viajarToolStripMenuItem, cerrarSecionToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 24);
@@ -61,8 +63,22 @@
             // perfilToolStripMenuItem
             // 
             perfilToolStripMenuItem.Name = "perfilToolStripMenuItem";
-            perfilToolStripMenuItem.Size = new Size(46, 20);
-            perfilToolStripMenuItem.Text = "Perfil";
+            perfilToolStripMenuItem.Size = new Size(84, 20);
+            perfilToolStripMenuItem.Text = "Cargar SUBE";
+            // 
+            // viajarToolStripMenuItem
+            // 
+            viajarToolStripMenuItem.Name = "viajarToolStripMenuItem";
+            viajarToolStripMenuItem.Size = new Size(48, 20);
+            viajarToolStripMenuItem.Text = "Viajar";
+            viajarToolStripMenuItem.Click += viajarToolStripMenuItem_Click;
+            // 
+            // cerrarSecionToolStripMenuItem
+            // 
+            cerrarSecionToolStripMenuItem.Name = "cerrarSecionToolStripMenuItem";
+            cerrarSecionToolStripMenuItem.Size = new Size(88, 20);
+            cerrarSecionToolStripMenuItem.Text = "Cerrar Sesion";
+            cerrarSecionToolStripMenuItem.Click += cerrarSecionToolStripMenuItem_Click;
             // 
             // Menu
             // 
@@ -75,7 +91,7 @@
             MainMenuStrip = menuStrip1;
             MaximizeBox = false;
             Name = "Menu";
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Menu";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
@@ -88,5 +104,7 @@
         private ToolStripMenuItem perfilToolStripMenuItem;
         private ToolStripMenuItem menuToolStripMenuItem;
         private ToolStripMenuItem activarSubeToolStripMenuItem;
+        private ToolStripMenuItem viajarToolStripMenuItem;
+        private ToolStripMenuItem cerrarSecionToolStripMenuItem;
     }
 }

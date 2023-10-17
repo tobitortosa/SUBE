@@ -55,5 +55,35 @@ namespace Entities
 
             return lista;
         }
+
+        public static void EscribirJson(string ruta, Person persona)
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(persona, Newtonsoft.Json.Formatting.Indented);
+                File.WriteAllText(ruta, json);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        public static Person LeerJson(string path)
+        {
+            Person persona;
+            persona = null;
+            try
+            {
+                string json = File.ReadAllText(path);
+                persona = JsonConvert.DeserializeObject<Person>(json);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            return persona;
+       }
+        
     }
 }

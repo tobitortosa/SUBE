@@ -63,6 +63,16 @@ namespace Interface.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap recorrido_tren {
+            get {
+                object obj = ResourceManager.GetObject("recorrido_tren", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap sube {
             get {
                 object obj = ResourceManager.GetObject("sube", resourceCulture);

@@ -54,6 +54,7 @@ namespace Interface.Admin
         {
             Sube nuevaSube;
             nuevaSube = new Sube(NumeroTarjeta, CodigoDeSeguridad, AdminCreador);
+
             Sube.CrearSube(nuevaSube);
             DialogResult = DialogResult.OK;
         }

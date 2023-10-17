@@ -78,6 +78,7 @@
             // 
             txtPassword.Location = new Point(141, 83);
             txtPassword.Name = "txtPassword";
+            txtPassword.PasswordChar = '*';
             txtPassword.Size = new Size(100, 23);
             txtPassword.TabIndex = 3;
             txtPassword.TextChanged += txtPassword_TextChanged;
@@ -130,6 +131,7 @@
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
+            Load += LoginForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

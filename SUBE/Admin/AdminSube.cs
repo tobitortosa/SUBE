@@ -18,7 +18,6 @@ namespace Interface
     {
         private Person _admin;
         private List<Sube> Subes;
-        private List<Sube> AllSubes;
         private Sube _selectedSube;
         private string _ruta;
         private string _nombreArchivo;
@@ -28,11 +27,8 @@ namespace Interface
             InitializeComponent();
 
             Admin = admin;
-            Subes = new List<Sube>();
-            AllSubes = new List<Sube>();
 
-            string nombreArchivo;
-            string ruta;
+            Subes = new List<Sube>();
             string path;
 
             Ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
@@ -42,7 +38,6 @@ namespace Interface
             Sube.FileExist(path);
 
             Subes = Serializadora.LeerSubeXML(path);
-            AllSubes = Subes;
 
             // Create an unbound DataGridView by declaring a column count.
             dgvSubes.ColumnCount = 6;
@@ -61,7 +56,7 @@ namespace Interface
             dgvSubes.Columns[4].Name = "Codigo de Seguridad";
             dgvSubes.Columns[5].Name = "Numero de Tarjeta";
 
-            dgvSubes.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvSubes.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dgvSubes.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dgvSubes.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             dgvSubes.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -79,7 +74,7 @@ namespace Interface
 
             if (Subes.Count > 0)
             {
-                foreach (Sube sube in AllSubes)
+                foreach (Sube sube in Subes)
                 {
                     string[] rowArray = new string[] { sube.UsernameAdminCreador, sube.Saldo.ToString(), sube.Activada.ToString(), sube.DiaCreada.ToString(), sube.CodigoDeSeguridad, sube.NumeroDeTarjeta };
                     dgvSubes.Rows.Add(rowArray);
@@ -105,11 +100,13 @@ namespace Interface
                 path = Ruta + NombreArchivo;
                 Subes = Serializadora.LeerSubeXML(path);
                 dgvSubes.Rows.Clear();
+
                 foreach (Sube sube in Subes)
                 {
                     string[] rowArray = new string[] { sube.UsernameAdminCreador, sube.Saldo.ToString(), sube.Activada.ToString(), sube.DiaCreada.ToString(), sube.CodigoDeSeguridad, sube.NumeroDeTarjeta };
                     dgvSubes.Rows.Add(rowArray);
                 }
+
                 SelectedSube = Subes[0];
                 PrintSube();
                 adminCreateSube.Close();
@@ -133,20 +130,59 @@ namespace Interface
         private void PrintSube()
         {
             lblNumeroSube.Text = SelectedSube.NumeroDeTarjeta;
-            lblSaldo.Text = SelectedSube.Saldo.ToString();
+            lblSaldo.Text = "$" + SelectedSube.Saldo.ToString();
 
             if (SelectedSube.Activada)
             {
-                lblNombreCompleto.Text = "Tobias Tortosa";
+                lblUsuarioPropietario.Text = SelectedSube.NombreCompletoPropietario;
             }
             else
             {
-                lblNombreCompleto.Text = "Desactivada";
+                lblUsuarioPropietario.Text = "Desactivada";
             }
         }
 
         private void btnEliminarSube_Click(object sender, EventArgs e)
         {
+            List<Person> persons;
+            persons = Person.ListaCompleta();
+
+            List<Person> personFiltradas;
+            personFiltradas = new List<Person>();
+
+            Person personaElejida;
+            personaElejida = new Person();
+
+            foreach (Person person in persons)
+            {
+                if (person.Username != SelectedSube.UsernamePropietario)
+                {
+                    personFiltradas.Add(person);
+                }
+                else
+                {
+                    personaElejida = person;
+                }
+            }
+
+
+            List<Sube> subeFiltrada;
+            subeFiltrada = new List<Sube>();
+
+            foreach (Sube su in personaElejida.ListaSube)
+            {
+                if (su.UsernamePropietario != SelectedSube.UsernamePropietario)
+                {
+                    subeFiltrada.Add(su);
+                    Console.WriteLine("no tendria que entrar");
+                }
+            }
+
+            personaElejida.ListaSube = subeFiltrada;
+            personFiltradas.Add(personaElejida);
+
+            Serializadora.EscribirPersonaXML(Ruta + @"\personas.xml", personFiltradas);
+
             List<Sube> listaFiltrada;
             listaFiltrada = new List<Sube>();
             string path;
@@ -160,10 +196,9 @@ namespace Interface
                 }
             }
 
-            Serializadora.EscribirSubeXML(path, listaFiltrada);
-            Console.WriteLine(listaFiltrada.Count.ToString());
-
             Subes = listaFiltrada;
+
+            Serializadora.EscribirSubeXML(path, listaFiltrada);
 
             dgvSubes.Rows.Clear();
             foreach (Sube sube in Subes)
@@ -176,13 +211,30 @@ namespace Interface
             {
                 SelectedSube = Subes[0];
                 PrintSube();
-            } else
+            }
+            else
             {
-                lblNombreCompleto.Text = "Nombre Completo";
+                lblUsuarioPropietario.Text = SelectedSube.NombreCompletoPropietario;
                 lblNumeroSube.Text = "0000 0000 0000 0000";
                 lblSaldo.Text = "000";
             }
+        }
 
+        private void AdminSube_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblUsuarioPropietario_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void lblNumeroSube_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void lblSaldo_Click(object sender, EventArgs e)
+        {
         }
     }
 }
