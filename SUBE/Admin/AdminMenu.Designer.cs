@@ -1,4 +1,7 @@
-﻿namespace Interface
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace Interface
 {
     partial class AdminMenu
     {

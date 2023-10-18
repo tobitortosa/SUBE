@@ -1,4 +1,7 @@
-﻿namespace Interface.Forms
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace Interface.Forms
 {
     partial class RegisterForm
     {

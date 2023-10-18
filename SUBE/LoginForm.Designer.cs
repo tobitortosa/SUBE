@@ -1,4 +1,7 @@
-﻿namespace SUBE
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace SUBE
 {
     partial class LoginForm
     {

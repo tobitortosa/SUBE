@@ -1,4 +1,7 @@
-﻿namespace Interface.Admin
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace Interface.Admin
 {
     partial class AdminViajes
     {

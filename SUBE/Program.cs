@@ -1,5 +1,6 @@
 using SUBE;
-
+using System.Windows.Forms;
+using System;
 namespace Interface
 {
     internal static class Program
