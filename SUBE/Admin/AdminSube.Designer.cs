@@ -44,11 +44,12 @@
             // label1
             // 
             label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label1.Location = new Point(12, 22);
             label1.Name = "label1";
-            label1.Size = new Size(133, 15);
+            label1.Size = new Size(118, 17);
             label1.TabIndex = 0;
-            label1.Text = "Listado de Tarjetas SUBE";
+            label1.Text = "Listado de Tarjetas";
             // 
             // dgvSubes
             // 
@@ -65,6 +66,7 @@
             // 
             // btnCrearSube
             // 
+            btnCrearSube.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             btnCrearSube.Location = new Point(451, 418);
             btnCrearSube.Name = "btnCrearSube";
             btnCrearSube.Size = new Size(177, 30);
@@ -75,6 +77,7 @@
             // 
             // btnEliminarSube
             // 
+            btnEliminarSube.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             btnEliminarSube.Location = new Point(451, 519);
             btnEliminarSube.Name = "btnEliminarSube";
             btnEliminarSube.Size = new Size(177, 30);
@@ -85,6 +88,7 @@
             // 
             // btnEditarSube
             // 
+            btnEditarSube.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             btnEditarSube.Location = new Point(451, 469);
             btnEditarSube.Name = "btnEditarSube";
             btnEditarSube.Size = new Size(177, 30);

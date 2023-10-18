@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminMenu));
             menuStrip1 = new MenuStrip();
             UsuariosToolStripMenuItem = new ToolStripMenuItem();
             sUBESToolStripMenuItem = new ToolStripMenuItem();
@@ -72,11 +73,12 @@
             ClientSize = new Size(800, 619);
             Controls.Add(menuStrip1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             IsMdiContainer = true;
             MainMenuStrip = menuStrip1;
             Name = "AdminMenu";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "AdminMenu";
+            Text = "Menu Admin";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);

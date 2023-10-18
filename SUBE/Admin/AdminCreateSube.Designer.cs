@@ -189,7 +189,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "AdminCreateSube";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "AdminCreateSube";
+            Text = "Crear Tarjeta";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

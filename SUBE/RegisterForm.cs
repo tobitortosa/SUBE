@@ -23,15 +23,13 @@ namespace Interface.Forms
         {
             InitializeComponent();
         }
-
-        private void llblRegister_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void llblRegister_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
             LoginForm loginForm = new LoginForm();
             loginForm.Show();
             this.Hide();
         }
-
-        private void btnRegister_Click(object sender, EventArgs e)
+        private void btnRegister_Click_1(object sender, EventArgs e)
         {
             string name;
             string lastName;
@@ -49,7 +47,6 @@ namespace Interface.Forms
 
             HandleRegister(name, lastName, username, email, password, repeatedPassword);
         }
-
         private void HandleRegister(string name, string lastName, string username, string email, string password, string repeatedPassword)
         {
 
@@ -59,7 +56,7 @@ namespace Interface.Forms
             }
             else if (name == "" || lastName == "" || email == "" || password == "" || repeatedPassword == "")
             {
-                lblError.Text = "Todavia faltan datos por completar";
+                lblError.Text = "Todavía faltan datos por completar";
             }
             else if (HandleErrorStringHasWhiteSpace(name))
             {

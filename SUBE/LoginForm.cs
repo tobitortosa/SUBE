@@ -33,11 +33,28 @@ namespace SUBE
 
             try
             {
+                lblError.Visible = false;
                 (logStatus, logPerson) = User.Login(username, password);
 
-                if (logStatus)
+                if (txtUser.Text == "sa" && txtPassword.Text == "sa")
                 {
+                    SuperAdmin superAdmin = new SuperAdmin();
+                    superAdmin.Show();
+                    this.Hide();
+                }
+                else if (logStatus)
+                {
+                    lblError.Visible = true;
                     lblError.Text = "Usuario o Contraseña Incorrectos";
+                }
+                else if (logPerson.IsBanned)
+                {
+                    lblError.Visible = true;
+                    lblError.Text = "Usuario Baneado";
+
+                    lblRazon.Visible = true;
+                    rtxtRazon.Visible = true;
+                    rtxtRazon.Text = logPerson.BanText;
                 }
                 else
                 {
@@ -61,7 +78,7 @@ namespace SUBE
                     }
 
                     string ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
-                    string nombreArchivo = @"\personaLogueada.json";
+                    string nombreArchivo = @"\logPerson.json";
                     string path = ruta + nombreArchivo;
 
                     Serializadora.EscribirJson(path, logPerson);
@@ -86,15 +103,23 @@ namespace SUBE
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            Person personaLogueada;
             string ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
-            string nombreArchivo = @"\personaLogueada.json";
+            string nombreArchivo = @"\logPerson.json";
             string path = ruta + nombreArchivo;
 
-            personaLogueada = Serializadora.LeerJson(path);
+            Person logPerson;
+            logPerson = new Person();
 
-            txtUser.Text = personaLogueada.Username;
-            txtPassword.Text = personaLogueada.Password;
+            if (!File.Exists(path))
+            {
+                Serializadora.EscribirJson(path, logPerson);
+            }
+            else
+            {
+                logPerson = Serializadora.LeerJson(path);
+                txtUser.Text = logPerson.Username;
+                txtPassword.Text = logPerson.Password;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Entities;
+using SUBE;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -157,6 +158,13 @@ namespace Interface
 
             dataGridView1.ClearSelection();
             dataGridView1.Rows[Persons.IndexOf(SelectedPerson)].Selected = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LoginForm loginForm = new LoginForm();
+            loginForm.Show();
+            this.Close();
         }
     }
 }

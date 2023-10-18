@@ -29,12 +29,14 @@
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SuperAdmin));
             label1 = new Label();
             txtBuscarPersona = new TextBox();
             label2 = new Label();
             dataGridView1 = new DataGridView();
             btnHacerAdmin = new Button();
             btnEliminarAdmin = new Button();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -87,9 +89,9 @@
             // 
             // btnHacerAdmin
             // 
-            btnHacerAdmin.Location = new Point(632, 140);
+            btnHacerAdmin.Location = new Point(603, 166);
             btnHacerAdmin.Name = "btnHacerAdmin";
-            btnHacerAdmin.Size = new Size(122, 23);
+            btnHacerAdmin.Size = new Size(151, 41);
             btnHacerAdmin.TabIndex = 5;
             btnHacerAdmin.Text = "Hacer Admin";
             btnHacerAdmin.UseVisualStyleBackColor = true;
@@ -97,19 +99,30 @@
             // 
             // btnEliminarAdmin
             // 
-            btnEliminarAdmin.Location = new Point(632, 202);
+            btnEliminarAdmin.Location = new Point(603, 257);
             btnEliminarAdmin.Name = "btnEliminarAdmin";
-            btnEliminarAdmin.Size = new Size(122, 23);
+            btnEliminarAdmin.Size = new Size(151, 41);
             btnEliminarAdmin.TabIndex = 6;
             btnEliminarAdmin.Text = "Eliminar Admin";
             btnEliminarAdmin.UseVisualStyleBackColor = true;
             btnEliminarAdmin.Click += btnEliminarAdmin_Click;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(696, 415);
+            button1.Name = "button1";
+            button1.Size = new Size(92, 23);
+            button1.TabIndex = 7;
+            button1.Text = "Cerrar Sesion";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // SuperAdmin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button1);
             Controls.Add(btnEliminarAdmin);
             Controls.Add(btnHacerAdmin);
             Controls.Add(dataGridView1);
@@ -117,8 +130,9 @@
             Controls.Add(txtBuscarPersona);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "SuperAdmin";
-            Text = "SuperAdmin";
+            Text = "Menu Super Admin ";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -132,5 +146,6 @@
         private DataGridView dataGridView1;
         private Button btnHacerAdmin;
         private Button btnEliminarAdmin;
+        private Button button1;
     }
 }

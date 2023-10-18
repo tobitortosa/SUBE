@@ -118,8 +118,6 @@ namespace Interface
             int index;
             index = e.RowIndex;
 
-            Console.WriteLine(index);
-
             if (index >= 0)
             {
                 SelectedSube = Subes[index];

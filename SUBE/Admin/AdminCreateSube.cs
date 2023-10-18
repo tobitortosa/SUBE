@@ -80,7 +80,7 @@ namespace Interface.Admin
             {
                 int numero;
                 numero = rnd.Next(1, 9);
-                primerosNumeros += numero.ToString(); 
+                primerosNumeros += numero.ToString();
             }
 
             for (int j = 0; j < 4; j++)
@@ -105,7 +105,7 @@ namespace Interface.Admin
             }
 
             codigo = $"{primerosNumeros} {segundosNumeros} {tercerosNumeros} {cuartosNumeros}";
-            
+
             foreach (Sube sube in listaCompleta)
             {
                 if (sube.NumeroDeTarjeta == codigo)
@@ -124,7 +124,7 @@ namespace Interface.Admin
             Random rnd;
 
             codigo = "";
-            
+
             rnd = new Random();
             for (int j = 0; j < 8; j++)
             {

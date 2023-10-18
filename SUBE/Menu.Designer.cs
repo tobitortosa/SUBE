@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Menu));
             menuStrip1 = new MenuStrip();
             menuToolStripMenuItem = new ToolStripMenuItem();
             activarSubeToolStripMenuItem = new ToolStripMenuItem();
@@ -87,12 +88,13 @@
             ClientSize = new Size(800, 450);
             Controls.Add(menuStrip1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             IsMdiContainer = true;
             MainMenuStrip = menuStrip1;
             MaximizeBox = false;
             Name = "Menu";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Menu";
+            Text = "Menu Principal";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);

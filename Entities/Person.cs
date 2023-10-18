@@ -14,6 +14,8 @@ namespace Entities
         private string _nombreArchivo;
         private string _path;
         private List<Viaje> _listaViajes;
+        private bool _isBanned;
+        private string _banText;
 
 
         public Person()
@@ -21,11 +23,15 @@ namespace Entities
             Ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
             NombreArchivo = @"\personas.xml";
             Path = Ruta + NombreArchivo;
+            IsBanned = false;
+            BanText = "";
         }
 
         public Person(string nombre, string apellido, string email, string password, string userName) : base(nombre, apellido, email, password, userName)
         {
             ListaSube = new List<Sube>();
+            BanText = "";
+            IsBanned = false;
         }
 
         public void EliminarSubeDePersona(Sube sube, Person persona)
@@ -61,5 +67,7 @@ namespace Entities
         public string NombreArchivo { get => _nombreArchivo; set => _nombreArchivo = value; }
         public string Path { get => _path; set => _path = value; }
         public List<Viaje> ListaViajes { get => _listaViajes; set => _listaViajes = value; }
+        public bool IsBanned { get => _isBanned; set => _isBanned = value; }
+        public string BanText { get => _banText; set => _banText = value; }
     }
 }
