@@ -163,23 +163,22 @@ namespace Interface
                 }
             }
 
-
-            List<Sube> subeFiltrada;
-            subeFiltrada = new List<Sube>();
-
-            foreach (Sube su in personaElejida.ListaSube)
-            {
-                if (su.UsernamePropietario != SelectedSube.UsernamePropietario)
+            if(personaElejida.ListaSube != null){
+                List<Sube> subeFiltrada;
+                subeFiltrada = new List<Sube>();
+                foreach (Sube su in personaElejida.ListaSube)
                 {
-                    subeFiltrada.Add(su);
-                    Console.WriteLine("no tendria que entrar");
+                    if (su.UsernamePropietario != SelectedSube.UsernamePropietario)
+                    {
+                        subeFiltrada.Add(su);
+                    }
                 }
+
+                personaElejida.ListaSube = subeFiltrada;
+                personFiltradas.Add(personaElejida);
+
+                Serializadora.EscribirPersonaXML(Ruta + @"\personas.xml", personFiltradas);
             }
-
-            personaElejida.ListaSube = subeFiltrada;
-            personFiltradas.Add(personaElejida);
-
-            Serializadora.EscribirPersonaXML(Ruta + @"\personas.xml", personFiltradas);
 
             List<Sube> listaFiltrada;
             listaFiltrada = new List<Sube>();

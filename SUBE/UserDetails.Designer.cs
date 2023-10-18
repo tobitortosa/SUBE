@@ -86,40 +86,40 @@ namespace Interface
             // lblUsername
             // 
             lblUsername.AutoSize = true;
-            lblUsername.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            lblUsername.Location = new Point(0, 38);
+            lblUsername.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            lblUsername.Location = new Point(10, 97);
             lblUsername.Name = "lblUsername";
-            lblUsername.Size = new Size(45, 17);
+            lblUsername.Size = new Size(43, 17);
             lblUsername.TabIndex = 9;
             lblUsername.Text = "label6";
             // 
             // lblEmail
             // 
             lblEmail.AutoSize = true;
-            lblEmail.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            lblEmail.Location = new Point(0, 184);
+            lblEmail.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            lblEmail.Location = new Point(10, 190);
             lblEmail.Name = "lblEmail";
-            lblEmail.Size = new Size(45, 17);
+            lblEmail.Size = new Size(43, 17);
             lblEmail.TabIndex = 8;
             lblEmail.Text = "label6";
             // 
             // lblApellido
             // 
             lblApellido.AutoSize = true;
-            lblApellido.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            lblApellido.Location = new Point(0, 130);
+            lblApellido.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            lblApellido.Location = new Point(10, 147);
             lblApellido.Name = "lblApellido";
-            lblApellido.Size = new Size(45, 17);
+            lblApellido.Size = new Size(43, 17);
             lblApellido.TabIndex = 6;
             lblApellido.Text = "label6";
             // 
             // lblNombre
             // 
             lblNombre.AutoSize = true;
-            lblNombre.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            lblNombre.Location = new Point(0, 81);
+            lblNombre.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            lblNombre.Location = new Point(10, 52);
             lblNombre.Name = "lblNombre";
-            lblNombre.Size = new Size(45, 17);
+            lblNombre.Size = new Size(43, 17);
             lblNombre.TabIndex = 5;
             lblNombre.Text = "label6";
             // 
@@ -127,7 +127,7 @@ namespace Interface
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.Location = new Point(0, 19);
+            label5.Location = new Point(6, 80);
             label5.Name = "label5";
             label5.Size = new Size(70, 17);
             label5.TabIndex = 4;
@@ -137,7 +137,7 @@ namespace Interface
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label4.Location = new Point(0, 163);
+            label4.Location = new Point(6, 173);
             label4.Name = "label4";
             label4.Size = new Size(42, 17);
             label4.TabIndex = 3;
@@ -147,7 +147,7 @@ namespace Interface
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(0, 113);
+            label2.Location = new Point(6, 130);
             label2.Name = "label2";
             label2.Size = new Size(59, 17);
             label2.TabIndex = 1;
@@ -157,7 +157,7 @@ namespace Interface
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(0, 64);
+            label1.Location = new Point(6, 35);
             label1.Name = "label1";
             label1.Size = new Size(60, 17);
             label1.TabIndex = 0;

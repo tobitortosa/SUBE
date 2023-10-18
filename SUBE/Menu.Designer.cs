@@ -35,7 +35,6 @@ namespace Interface
             menuStrip1 = new MenuStrip();
             menuToolStripMenuItem = new ToolStripMenuItem();
             activarSubeToolStripMenuItem = new ToolStripMenuItem();
-            perfilToolStripMenuItem = new ToolStripMenuItem();
             viajarToolStripMenuItem = new ToolStripMenuItem();
             cerrarSecionToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
@@ -43,7 +42,7 @@ namespace Interface
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem, activarSubeToolStripMenuItem, perfilToolStripMenuItem, viajarToolStripMenuItem, cerrarSecionToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem, activarSubeToolStripMenuItem, viajarToolStripMenuItem, cerrarSecionToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 24);
@@ -63,12 +62,6 @@ namespace Interface
             activarSubeToolStripMenuItem.Size = new Size(86, 20);
             activarSubeToolStripMenuItem.Text = "Activar SUBE";
             activarSubeToolStripMenuItem.Click += activarSubeToolStripMenuItem_Click;
-            // 
-            // perfilToolStripMenuItem
-            // 
-            perfilToolStripMenuItem.Name = "perfilToolStripMenuItem";
-            perfilToolStripMenuItem.Size = new Size(84, 20);
-            perfilToolStripMenuItem.Text = "Cargar SUBE";
             // 
             // viajarToolStripMenuItem
             // 
@@ -106,7 +99,6 @@ namespace Interface
 
         #endregion
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem perfilToolStripMenuItem;
         private ToolStripMenuItem menuToolStripMenuItem;
         private ToolStripMenuItem activarSubeToolStripMenuItem;
         private ToolStripMenuItem viajarToolStripMenuItem;
