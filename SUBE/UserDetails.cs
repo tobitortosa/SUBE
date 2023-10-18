@@ -101,6 +101,19 @@ namespace Interface
             lblNumeroSube4.Text = sube.NumeroDeTarjeta;
         }
 
+        private void lblEmail_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void lblApellido_Click(object sender, System.EventArgs e)
+        {
+        }
+
+        private void lblUsername_Click(object sender, System.EventArgs e)
+        {
+        }
+
         public Person Persona { get => _persona; set => _persona = value; }
     }
 }

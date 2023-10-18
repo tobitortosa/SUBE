@@ -18,6 +18,9 @@ namespace Interface
         private UserDetails _userDetails;
         private ActivarSube _activarSube;
         private ViajarMenu _viajarMenu;
+        private CargarSube _cargarSube;
+        private Contact _contacto;
+
         private Person _person;
         private string _ruta;
         private string _nombreArchivoSubes;
@@ -37,13 +40,21 @@ namespace Interface
             UserDetails = new UserDetails(person);
             ActivarSube = new ActivarSube(person);
             ViajarMenu = new ViajarMenu(person);
+            CargarSube = new CargarSube();
+            Contacto = new Contact();
+
 
             UserDetails.MdiParent = this;
             ActivarSube.MdiParent = this;
             ViajarMenu.MdiParent = this;
+            CargarSube.MdiParent = this;
+            Contacto.MdiParent = this;
 
             UserDetails.Show();
+
+            CargarSube.Close();
             ActivarSube.Close();
+            Contacto.Close();
             ViajarMenu.Close();
         }
         private void activarSubeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -60,6 +71,9 @@ namespace Interface
                     ActivarSube.MdiParent = this;
 
                     ActivarSube.Show();
+
+                    CargarSube.Close();
+                    Contacto.Close();
                     UserDetails.Close();
                     ViajarMenu.Close();
                 }
@@ -82,8 +96,11 @@ namespace Interface
                     UserDetails.MdiParent = this;
 
                     UserDetails.Show();
+
                     ActivarSube.Close();
+                    Contacto.Close();
                     ViajarMenu.Close();
+                    CargarSube.Close();
                 }
             }
         }
@@ -103,8 +120,11 @@ namespace Interface
                     ViajarMenu.MdiParent = this;
 
                     ViajarMenu.Show();
-                    UserDetails.Close();
+
                     ActivarSube.Close();
+                    Contacto.Close();
+                    UserDetails.Close();
+                    CargarSube.Close();
                 }
             }
         }
@@ -116,6 +136,54 @@ namespace Interface
             this.Close();
         }
 
+        private void cargarSubeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string pathPerson;
+            pathPerson = Ruta + NombreArchivoPersonas;
+
+            ListaPersonas = Serializadora.LeerPersonaXML(pathPerson);
+
+            foreach (Person person in ListaPersonas)
+            {
+                if (person.Username == Person.Username)
+                {
+                    CargarSube = new CargarSube();
+                    CargarSube.MdiParent = this;
+
+                    CargarSube.Show();
+
+                    ActivarSube.Close();
+                    Contacto.Close();
+                    UserDetails.Close();
+                    ViajarMenu.Close();
+                }
+            }
+        }
+
+        private void contactoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string pathPerson;
+            pathPerson = Ruta + NombreArchivoPersonas;
+
+            ListaPersonas = Serializadora.LeerPersonaXML(pathPerson);
+
+            foreach (Person person in ListaPersonas)
+            {
+                if (person.Username == Person.Username)
+                {
+                    Contacto = new Contact();
+                    Contacto.MdiParent = this;
+
+                    Contacto.Show();
+
+                    ActivarSube.Close();
+                    CargarSube.Close();
+                    UserDetails.Close();
+                    ViajarMenu.Close();
+                }
+            }
+        }
+
         public Person Person { get => _person; set => _person = value; }
         public UserDetails UserDetails { get => _userDetails; set => _userDetails = value; }
         public ActivarSube ActivarSube { get => _activarSube; set => _activarSube = value; }
@@ -124,5 +192,7 @@ namespace Interface
         public string NombreArchivoPersonas { get => _nombreArchivoPersonas; set => _nombreArchivoPersonas = value; }
         public List<Person> ListaPersonas { get => _listaPersonas; set => _listaPersonas = value; }
         public ViajarMenu ViajarMenu { get => _viajarMenu; set => _viajarMenu = value; }
+        public CargarSube CargarSube { get => _cargarSube; set => _cargarSube = value; }
+        public Contact Contacto { get => _contacto; set => _contacto = value; }
     }
 }

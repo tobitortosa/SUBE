@@ -135,6 +135,7 @@ namespace Interface
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "SuperAdmin";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Menu Super Admin ";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);

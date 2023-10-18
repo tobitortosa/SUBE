@@ -38,7 +38,7 @@ namespace SUBE
                 lblError.Visible = false;
                 (logStatus, logPerson) = User.Login(username, password);
 
-                if (txtUser.Text == "sa" && txtPassword.Text == "sa")
+                if (txtUser.Text == "superadmin" && txtPassword.Text == "superadmin")
                 {
                     SuperAdmin superAdmin = new SuperAdmin();
                     superAdmin.Show();

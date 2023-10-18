@@ -36,13 +36,15 @@ namespace Interface
             menuToolStripMenuItem = new ToolStripMenuItem();
             activarSubeToolStripMenuItem = new ToolStripMenuItem();
             viajarToolStripMenuItem = new ToolStripMenuItem();
+            cargarSubeToolStripMenuItem = new ToolStripMenuItem();
+            contactoToolStripMenuItem = new ToolStripMenuItem();
             cerrarSecionToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem, activarSubeToolStripMenuItem, viajarToolStripMenuItem, cerrarSecionToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem, activarSubeToolStripMenuItem, viajarToolStripMenuItem, cargarSubeToolStripMenuItem, contactoToolStripMenuItem, cerrarSecionToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 24);
@@ -69,6 +71,20 @@ namespace Interface
             viajarToolStripMenuItem.Size = new Size(48, 20);
             viajarToolStripMenuItem.Text = "Viajar";
             viajarToolStripMenuItem.Click += viajarToolStripMenuItem_Click;
+            // 
+            // cargarSubeToolStripMenuItem
+            // 
+            cargarSubeToolStripMenuItem.Name = "cargarSubeToolStripMenuItem";
+            cargarSubeToolStripMenuItem.Size = new Size(83, 20);
+            cargarSubeToolStripMenuItem.Text = "Cargar Sube";
+            cargarSubeToolStripMenuItem.Click += cargarSubeToolStripMenuItem_Click;
+            // 
+            // contactoToolStripMenuItem
+            // 
+            contactoToolStripMenuItem.Name = "contactoToolStripMenuItem";
+            contactoToolStripMenuItem.Size = new Size(68, 20);
+            contactoToolStripMenuItem.Text = "Contacto";
+            contactoToolStripMenuItem.Click += contactoToolStripMenuItem_Click;
             // 
             // cerrarSecionToolStripMenuItem
             // 
@@ -103,5 +119,7 @@ namespace Interface
         private ToolStripMenuItem activarSubeToolStripMenuItem;
         private ToolStripMenuItem viajarToolStripMenuItem;
         private ToolStripMenuItem cerrarSecionToolStripMenuItem;
+        private ToolStripMenuItem contactoToolStripMenuItem;
+        private ToolStripMenuItem cargarSubeToolStripMenuItem;
     }
 }
