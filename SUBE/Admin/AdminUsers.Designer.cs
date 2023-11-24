@@ -33,7 +33,6 @@ namespace Interface.Admin
         {
             btnVerViajes = new Button();
             btnBanearUsuario = new Button();
-            btnModificarUsuario = new Button();
             dgvUsers = new DataGridView();
             label1 = new Label();
             groupBox1 = new GroupBox();
@@ -59,7 +58,7 @@ namespace Interface.Admin
             // btnVerViajes
             // 
             btnVerViajes.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            btnVerViajes.Location = new Point(506, 467);
+            btnVerViajes.Location = new Point(506, 443);
             btnVerViajes.Name = "btnVerViajes";
             btnVerViajes.Size = new Size(177, 30);
             btnVerViajes.TabIndex = 26;
@@ -70,23 +69,13 @@ namespace Interface.Admin
             // btnBanearUsuario
             // 
             btnBanearUsuario.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            btnBanearUsuario.Location = new Point(506, 517);
+            btnBanearUsuario.Location = new Point(506, 493);
             btnBanearUsuario.Name = "btnBanearUsuario";
             btnBanearUsuario.Size = new Size(177, 30);
             btnBanearUsuario.TabIndex = 25;
             btnBanearUsuario.Text = "Banear Usuario";
             btnBanearUsuario.UseVisualStyleBackColor = true;
             btnBanearUsuario.Click += btnBanearUsuario_Click;
-            // 
-            // btnModificarUsuario
-            // 
-            btnModificarUsuario.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            btnModificarUsuario.Location = new Point(506, 416);
-            btnModificarUsuario.Name = "btnModificarUsuario";
-            btnModificarUsuario.Size = new Size(177, 30);
-            btnModificarUsuario.TabIndex = 24;
-            btnModificarUsuario.Text = "Modificar Usuario";
-            btnModificarUsuario.UseVisualStyleBackColor = true;
             // 
             // dgvUsers
             // 
@@ -296,7 +285,6 @@ namespace Interface.Admin
             Controls.Add(groupBox1);
             Controls.Add(btnVerViajes);
             Controls.Add(btnBanearUsuario);
-            Controls.Add(btnModificarUsuario);
             Controls.Add(dgvUsers);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.None;
@@ -313,7 +301,6 @@ namespace Interface.Admin
         #endregion
         private Button btnVerViajes;
         private Button btnBanearUsuario;
-        private Button btnModificarUsuario;
         private DataGridView dgvUsers;
         private Label label1;
         private GroupBox groupBox1;

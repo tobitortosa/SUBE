@@ -1,4 +1,6 @@
 ﻿using Entities;
+using Entities.CRUDs;
+using Entities.Entidades;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,34 +22,30 @@ namespace Interface.Admin
 
             Persona = persona;
 
-            lblNombre.Text = persona.Nombre;
-            lblApellido.Text = persona.Apellido;
-            lblUsername.Text = persona.Username;
-            lblEmail.Text = persona.Email;
+            lblNombre.Text = persona.nombre;
+            lblApellido.Text = persona.apellido;
+            lblUsername.Text = persona.username;
+            lblEmail.Text = persona.email;
 
-            rtxtRazon.Text = persona.BanText;
+            rtxtRazon.Text = persona.ban_text;
         }
 
         private void btnConfirmar_Click_1(object sender, EventArgs e)
         {
-            List<Person> list;
-            list = Person.ListaCompleta();
-
-            foreach (Person person in list)
+            try
             {
-                if (person.Username == Persona.Username)
-                {
-                    person.IsBanned = false;
-                    person.BanText = "";
-                }
+                Persona.ban = false;
+                Persona.ban_text = "";
+
+                PersonCRUD personCRUD = new PersonCRUD();
+                personCRUD.Update(Persona);
+
+                DialogResult = DialogResult.OK;
             }
-
-            string ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
-            string nombreArchivo = @"\personas.xml";
-            string path = ruta + nombreArchivo;
-
-            Serializadora.EscribirPersonaXML(path, list);
-            DialogResult = DialogResult.OK;
+            catch (Exception ex)
+            {
+                Controladora.HandleException(ex);
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

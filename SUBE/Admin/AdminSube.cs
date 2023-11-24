@@ -1,4 +1,6 @@
 ﻿using Entities;
+using Entities.CRUDs;
+using Entities.Entidades;
 using Interface.Admin;
 using System;
 using System.Collections.Generic;
@@ -19,8 +21,6 @@ namespace Interface
         private Person _admin;
         private List<Sube> Subes;
         private Sube _selectedSube;
-        private string _ruta;
-        private string _nombreArchivo;
 
         public AdminSube(Person admin)
         {
@@ -29,15 +29,8 @@ namespace Interface
             Admin = admin;
 
             Subes = new List<Sube>();
-            string path;
+            Subes = Select<Sube>.SelectAll("sube");
 
-            Ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
-            NombreArchivo = @"\subes.xml";
-            path = Ruta + NombreArchivo;
-
-            Sube.FileExist(path);
-
-            Subes = Serializadora.LeerSubeXML(path);
 
             // Create an unbound DataGridView by declaring a column count.
             dgvSubes.ColumnCount = 6;
@@ -76,144 +69,122 @@ namespace Interface
             {
                 foreach (Sube sube in Subes)
                 {
-                    string[] rowArray = new string[] { sube.UsernameAdminCreador, sube.Saldo.ToString(), sube.Activada.ToString(), sube.DiaCreada.ToString(), sube.CodigoDeSeguridad, sube.NumeroDeTarjeta };
+                    string[] rowArray = new string[] { sube.creator_username, sube.saldo.ToString(), sube.activada.ToString(), sube.diaCreada.ToString(), sube.codigoDeSeguridad, sube.numeroDeTarjeta };
                     dgvSubes.Rows.Add(rowArray);
                 }
+
                 SelectedSube = Subes[0];
                 PrintSube();
             }
         }
 
         public Person Admin { get => _admin; set => _admin = value; }
-        public string Ruta { get => _ruta; set => _ruta = value; }
-        public string NombreArchivo { get => _nombreArchivo; set => _nombreArchivo = value; }
         public Sube SelectedSube { get => _selectedSube; set => _selectedSube = value; }
 
         private void btnCrearSube_Click(object sender, EventArgs e)
         {
-            AdminCreateSube adminCreateSube = new AdminCreateSube(Admin);
-            adminCreateSube.ShowDialog();
-
-            if (adminCreateSube.DialogResult == DialogResult.OK)
+            try
             {
-                string path;
-                path = Ruta + NombreArchivo;
-                Subes = Serializadora.LeerSubeXML(path);
-                dgvSubes.Rows.Clear();
+                AdminCreateSube adminCreateSube = new AdminCreateSube(Admin);
+                adminCreateSube.ShowDialog();
 
-                foreach (Sube sube in Subes)
+                if (adminCreateSube.DialogResult == DialogResult.OK)
                 {
-                    string[] rowArray = new string[] { sube.UsernameAdminCreador, sube.Saldo.ToString(), sube.Activada.ToString(), sube.DiaCreada.ToString(), sube.CodigoDeSeguridad, sube.NumeroDeTarjeta };
-                    dgvSubes.Rows.Add(rowArray);
-                }
+                    Subes = Select<Sube>.SelectAll("sube");
+                    dgvSubes.Rows.Clear();
 
-                SelectedSube = Subes[0];
-                PrintSube();
-                adminCreateSube.Close();
+                    foreach (Sube sube in Subes)
+                    {
+                        string[] rowArray = new string[] { sube.creator_username, sube.saldo.ToString(), sube.activada.ToString(), sube.diaCreada.ToString(), sube.codigoDeSeguridad, sube.numeroDeTarjeta };
+                        dgvSubes.Rows.Add(rowArray);
+                    }
+
+                    SelectedSube = Subes[0];
+                    PrintSube();
+                    adminCreateSube.Close();
+                }
             }
+            catch (Exception ex)
+            {
+                Controladora.HandleException(ex);
+            }
+
         }
 
         private void dgvSubes_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int index;
-            index = e.RowIndex;
-
-            if (index >= 0)
+            try
             {
-                SelectedSube = Subes[index];
+                int index;
+                index = e.RowIndex;
+
+                if (index >= 0)
+                {
+                    SelectedSube = Subes[index];
+                }
+                PrintSube();
             }
-            PrintSube();
+            catch (Exception ex)
+            {
+                Controladora.HandleException(ex);
+            }
         }
 
         private void PrintSube()
         {
-            lblNumeroSube.Text = SelectedSube.NumeroDeTarjeta;
-            lblSaldo.Text = "$" + SelectedSube.Saldo.ToString();
+            try
+            {
+                lblNumeroSube.Text = SelectedSube.numeroDeTarjeta;
+                lblSaldo.Text = "$" + SelectedSube.saldo.ToString();
 
-            if (SelectedSube.Activada)
-            {
-                lblUsuarioPropietario.Text = SelectedSube.NombreCompletoPropietario;
+                if (SelectedSube.activada)
+                {
+                    PersonCRUD personCRUD = new PersonCRUD();
+                    Person person = personCRUD.GetByPK(SelectedSube.person_username);
+                    lblUsuarioPropietario.Text = person.nombre + " " + person.apellido;
+                }
+                else
+                {
+                    lblUsuarioPropietario.Text = "Desactivada";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                lblUsuarioPropietario.Text = "Desactivada";
+                Controladora.HandleException(ex);
             }
         }
 
         private void btnEliminarSube_Click(object sender, EventArgs e)
         {
-            List<Person> persons;
-            persons = Person.ListaCompleta();
-
-            List<Person> personFiltradas;
-            personFiltradas = new List<Person>();
-
-            Person personaElejida;
-            personaElejida = new Person();
-
-            foreach (Person person in persons)
+            try
             {
-                if (person.Username != SelectedSube.UsernamePropietario)
+                SubeCRUD subeCRUD = new SubeCRUD();
+                subeCRUD.Delete(SelectedSube.numeroDeTarjeta);
+
+                Subes = Select<Sube>.SelectAll("sube");
+
+                dgvSubes.Rows.Clear();
+                foreach (Sube sube in Subes)
                 {
-                    personFiltradas.Add(person);
+                    string[] rowArray = new string[] { sube.creator_username, sube.saldo.ToString(), sube.activada.ToString(), sube.diaCreada.ToString(), sube.codigoDeSeguridad, sube.numeroDeTarjeta };
+                    dgvSubes.Rows.Add(rowArray);
+                }
+
+                if (Subes.Count > 0)
+                {
+                    SelectedSube = Subes[0];
+                    PrintSube();
                 }
                 else
                 {
-                    personaElejida = person;
+                    lblUsuarioPropietario.Text = "Nombre Apellido";
+                    lblNumeroSube.Text = "0000 0000 0000 0000";
+                    lblSaldo.Text = "000";
                 }
             }
-
-            if(personaElejida.ListaSube != null){
-                List<Sube> subeFiltrada;
-                subeFiltrada = new List<Sube>();
-                foreach (Sube su in personaElejida.ListaSube)
-                {
-                    if (su.UsernamePropietario != SelectedSube.UsernamePropietario)
-                    {
-                        subeFiltrada.Add(su);
-                    }
-                }
-
-                personaElejida.ListaSube = subeFiltrada;
-                personFiltradas.Add(personaElejida);
-
-                Serializadora.EscribirPersonaXML(Ruta + @"\personas.xml", personFiltradas);
-            }
-
-            List<Sube> listaFiltrada;
-            listaFiltrada = new List<Sube>();
-            string path;
-            path = Ruta + NombreArchivo;
-
-            foreach (Sube sube in Subes)
+            catch (Exception ex)
             {
-                if (sube != SelectedSube)
-                {
-                    listaFiltrada.Add(sube);
-                }
-            }
-
-            Subes = listaFiltrada;
-
-            Serializadora.EscribirSubeXML(path, listaFiltrada);
-
-            dgvSubes.Rows.Clear();
-            foreach (Sube sube in Subes)
-            {
-                string[] rowArray = new string[] { sube.UsernameAdminCreador, sube.Saldo.ToString(), sube.Activada.ToString(), sube.DiaCreada.ToString(), sube.CodigoDeSeguridad, sube.NumeroDeTarjeta };
-                dgvSubes.Rows.Add(rowArray);
-            }
-
-            if (Subes.Count > 0)
-            {
-                SelectedSube = Subes[0];
-                PrintSube();
-            }
-            else
-            {
-                lblUsuarioPropietario.Text = SelectedSube.NombreCompletoPropietario;
-                lblNumeroSube.Text = "0000 0000 0000 0000";
-                lblSaldo.Text = "000";
+                Controladora.HandleException(ex);
             }
         }
 

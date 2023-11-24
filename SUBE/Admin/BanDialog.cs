@@ -1,4 +1,6 @@
 ﻿using Entities;
+using Entities.CRUDs;
+using Entities.Entidades;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,45 +26,41 @@ namespace Interface.Admin
 
             Persona = persona;
 
-            lblNombre.Text = persona.Nombre;
-            lblApellido.Text = persona.Apellido;
-            lblUsername.Text = persona.Username;
-            lblEmail.Text = persona.Email;
+            lblNombre.Text = persona.nombre;
+            lblApellido.Text = persona.apellido;
+            lblUsername.Text = persona.username;
+            lblEmail.Text = persona.email;
 
         }
 
         private void btnConfirmar_Click(object sender, EventArgs e)
         {
-            if (rtxtRazon.Text.Length == 0)
+            try
             {
-                lblError.Visible = true;
-                lblError.Text = "Ingrese la razón del baneo";
-            }
-            else if (rtxtRazon.Text.Length < 15)
-            {
-                lblError.Visible = true;
-                lblError.Text = "Mínimo de 15 caracteres";
-            }
-            else
-            {
-                List<Person> list;
-                list = Person.ListaCompleta();
-
-                foreach (Person person in list)
+                if (rtxtRazon.Text.Length == 0)
                 {
-                    if (person.Username == Persona.Username)
-                    {
-                        person.IsBanned = true;
-                        person.BanText = rtxtRazon.Text;
-                    }
+                    lblError.Visible = true;
+                    lblError.Text = "Ingrese la razón del baneo";
                 }
+                else if (rtxtRazon.Text.Length < 15)
+                {
+                    lblError.Visible = true;
+                    lblError.Text = "Mínimo de 15 caracteres";
+                }
+                else
+                {
+                    Persona.ban = true;
+                    Persona.ban_text = rtxtRazon.Text;
 
-                string ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
-                string nombreArchivo = @"\personas.xml";
-                string path = ruta + nombreArchivo;
+                    PersonCRUD personCRUD = new PersonCRUD();
+                    personCRUD.Update(Persona);
 
-                Serializadora.EscribirPersonaXML(path, list);
-                DialogResult = DialogResult.OK;
+                    DialogResult = DialogResult.OK;
+                }
+            }
+            catch (Exception ex)
+            {
+                Controladora.HandleException(ex);
             }
         }
 

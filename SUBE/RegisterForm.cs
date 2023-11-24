@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using Entities.CRUDs;
+using Entities.Entidades;
 
 namespace Interface.Forms
 {
@@ -49,50 +51,61 @@ namespace Interface.Forms
         }
         private void HandleRegister(string name, string lastName, string username, string email, string password, string repeatedPassword)
         {
-
-            if (!IsValidEmail(email))
+            try
             {
-                lblError.Text = "Ingrese un email valido";
-            }
-            else if (name == "" || lastName == "" || email == "" || password == "" || repeatedPassword == "")
-            {
-                lblError.Text = "Todavía faltan datos por completar";
-            }
-            else if (HandleErrorStringHasWhiteSpace(name))
-            {
-                lblError.Text = "Ingrese un nombre valido";
-            }
-            else if (HandleErrorStringHasWhiteSpace(lastName))
-            {
-                lblError.Text = "Ingrese un apellido valido";
-            }
-            else if (HandleErrorStringHasWhiteSpace(username))
-            {
-                lblError.Text = "Ingrese un username sin espacios";
-            }
-            else if (password == repeatedPassword)
-            {
-                Person newPerson = new Person(name, lastName, email, password, username);
-                bool res = User.AddPerson(newPerson);
-
-                try
+                if (!IsValidEmail(email))
                 {
-                    if (res)
-                    {
-                        lblError.Text = "Nombre de Usuario en Uso";
-                    }
+                    lblError.Text = "Ingrese un email valido";
+                }
+                else if (name == "" || lastName == "" || email == "" || password == "" || repeatedPassword == "")
+                {
+                    lblError.Text = "Todavía faltan datos por completar";
+                }
+                else if (HandleErrorStringHasWhiteSpace(name))
+                {
+                    lblError.Text = "Ingrese un nombre valido";
+                }
+                else if (HandleErrorStringHasWhiteSpace(lastName))
+                {
+                    lblError.Text = "Ingrese un apellido valido";
+                }
+                else if (HandleErrorStringHasWhiteSpace(username))
+                {
+                    lblError.Text = "Ingrese un username sin espacios";
+                }
+                else if (password == repeatedPassword)
+                {
+                    Person newPerson = new Person(username, name, lastName, email, password, false, "", false);
 
-                    else
+                    PersonCRUD personCrud = new PersonCRUD();
+                    bool res = personCrud.Insert(newPerson);
+
+                    Controladora.HandleCreateConfig(newPerson);
+
+                    try
                     {
-                        LoginForm loginForm = new LoginForm();
-                        loginForm.Show();
-                        this.Hide();
+                        if (!res)
+                        {
+                            lblError.Text = "Nombre de Usuario en Uso";
+                        }
+
+                        else
+                        {
+                            LoginForm loginForm = new LoginForm();
+                            loginForm.Show();
+                            this.Hide();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex}");
                     }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error: {ex}");
-                }
+
+            }
+            catch (Exception ex)
+            {
+                Controladora.HandleException(ex);
             }
         }
 

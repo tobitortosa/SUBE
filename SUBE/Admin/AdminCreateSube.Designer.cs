@@ -45,6 +45,7 @@ namespace Interface.Admin
             lblNombreCompleto = new Label();
             lblNumeroSube = new Label();
             btnCrearSube = new Button();
+            lblError = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -163,7 +164,7 @@ namespace Interface.Admin
             // 
             // btnCrearSube
             // 
-            btnCrearSube.Location = new Point(12, 365);
+            btnCrearSube.Location = new Point(12, 373);
             btnCrearSube.Name = "btnCrearSube";
             btnCrearSube.Size = new Size(285, 38);
             btnCrearSube.TabIndex = 24;
@@ -171,11 +172,23 @@ namespace Interface.Admin
             btnCrearSube.UseVisualStyleBackColor = true;
             btnCrearSube.Click += btnCrearSube_Click;
             // 
+            // lblError
+            // 
+            lblError.ForeColor = Color.Red;
+            lblError.Location = new Point(12, 345);
+            lblError.Name = "lblError";
+            lblError.Size = new Size(285, 24);
+            lblError.TabIndex = 25;
+            lblError.Text = "ERROR";
+            lblError.TextAlign = ContentAlignment.MiddleCenter;
+            lblError.Visible = false;
+            // 
             // AdminCreateSube
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(309, 415);
+            ClientSize = new Size(309, 423);
+            Controls.Add(lblError);
             Controls.Add(btnCrearSube);
             Controls.Add(lblSaldo);
             Controls.Add(lblNombreCompleto);
@@ -212,5 +225,6 @@ namespace Interface.Admin
         private Label lblNombreCompleto;
         private Label lblNumeroSube;
         private Button btnCrearSube;
+        private Label lblError;
     }
 }

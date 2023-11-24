@@ -1,67 +1,46 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Entities.Entidades;
 using Newtonsoft.Json;
 
 namespace Entities
 {
     [Serializable]
-    [XmlInclude(typeof(Person))]
-    public class Serializadora
+    [XmlInclude(typeof(Sube))]
+    public static class Serializadora<T>
     {
-        public static void EscribirPersonaXML(string path, List<Person> listaEmpleados)
+        public static void EscribirXML(string path, List<T> lista)
         {
             using (StreamWriter sw = new StreamWriter(path))
             {
-                XmlSerializer ser = new XmlSerializer(typeof(List<Person>));
-                ser.Serialize(sw, listaEmpleados);
+                XmlSerializer ser = new XmlSerializer(typeof(List<T>));
+                ser.Serialize(sw, lista);
             }
         }
 
-        public static List<Person> LeerPersonaXML(string path)
+        public static List<T> LeerXML(string path)
         {
-            List<Person> lista = null;
+            List<T> lista = null;
 
             using (StreamReader sr = new StreamReader(path))
             {
-                XmlSerializer des = new XmlSerializer(typeof(List<Person>));
-                lista = (List<Person>)des.Deserialize(sr);
+                XmlSerializer des = new XmlSerializer(typeof(List<T>));
+                lista = (List<T>)des.Deserialize(sr);
             }
 
             return lista;
         }
-
-        public static void EscribirSubeXML(string path, List<Sube> listaSubes)
-        {
-            using (StreamWriter sw = new StreamWriter(path))
-            {
-                XmlSerializer ser = new XmlSerializer(typeof(List<Sube>));
-                ser.Serialize(sw, listaSubes);
-            }
-        }
-
-        public static List<Sube> LeerSubeXML(string path)
-        {
-            List<Sube> lista = null;
-
-            using (StreamReader sr = new StreamReader(path))
-            {
-                XmlSerializer des = new XmlSerializer(typeof(List<Sube>));
-                lista = (List<Sube>)des.Deserialize(sr);
-            }
-
-            return lista;
-        }
-
-        public static void EscribirJson(string ruta, Person persona)
+        public static void EscribirJson(T obj, string path)
         {
             try
             {
-                string json = JsonConvert.SerializeObject(persona, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(ruta, json);
+                string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
+                File.WriteAllText(path, json);
             }
             catch (Exception e)
             {
@@ -69,21 +48,20 @@ namespace Entities
             }
         }
 
-        public static Person LeerJson(string path)
+        public static T LeerJson(string path)
         {
-            Person persona;
-            persona = null;
+            T obj;
+            obj = default(T);
             try
             {
                 string json = File.ReadAllText(path);
-                persona = JsonConvert.DeserializeObject<Person>(json);
+                obj = JsonConvert.DeserializeObject<T>(json);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
-            return persona;
-       }
-        
+            return obj;
+        }
     }
 }

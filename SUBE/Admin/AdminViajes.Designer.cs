@@ -35,6 +35,7 @@ namespace Interface.Admin
             label1 = new Label();
             dgvViajes = new DataGridView();
             lblNombreCompleto = new Label();
+            btnImprimir = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvViajes).BeginInit();
             SuspendLayout();
             // 
@@ -70,11 +71,22 @@ namespace Interface.Admin
             lblNombreCompleto.TabIndex = 25;
             lblNombreCompleto.Text = "Tobias Tortosa";
             // 
+            // btnImprimir
+            // 
+            btnImprimir.Location = new Point(384, 9);
+            btnImprimir.Name = "btnImprimir";
+            btnImprimir.Size = new Size(132, 23);
+            btnImprimir.TabIndex = 26;
+            btnImprimir.Text = "Imprimir Viajes";
+            btnImprimir.UseVisualStyleBackColor = true;
+            btnImprimir.Click += btnImprimir_Click;
+            // 
             // AdminViajes
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(528, 450);
+            Controls.Add(btnImprimir);
             Controls.Add(lblNombreCompleto);
             Controls.Add(dgvViajes);
             Controls.Add(label1);
@@ -93,5 +105,6 @@ namespace Interface.Admin
         private Label label1;
         private DataGridView dgvViajes;
         private Label lblNombreCompleto;
+        private Button btnImprimir;
     }
 }

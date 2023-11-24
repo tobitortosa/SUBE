@@ -1,4 +1,6 @@
 ﻿using Entities;
+using Entities.CRUDs;
+using Entities.Entidades;
 using SUBE;
 using System;
 using System.Collections.Generic;
@@ -19,26 +21,13 @@ namespace Interface
         private List<Person> _persons;
         private List<Person> _allPersons;
         private Person _selectedPerson;
-
-        private string ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
-        private string nombreArchivo = @"\personas.xml";
+        private string Input {  get; set; }
         public SuperAdmin()
         {
             InitializeComponent();
 
-            Persons = new List<Person>();
-            AllPersons = new List<Person>();
-
-            string nombreArchivo;
-            string ruta;
-            string path;
-
-            ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
-            nombreArchivo = @"\personas.xml";
-            path = ruta + nombreArchivo;
-
-            Persons = Serializadora.LeerPersonaXML(path);
-            AllPersons = Serializadora.LeerPersonaXML(path);
+            Persons = Select<Person>.SelectAll("person");
+            AllPersons = Persons;
 
             // Create an unbound DataGridView by declaring a column count.
             dataGridView1.ColumnCount = 4;
@@ -69,7 +58,7 @@ namespace Interface
 
             foreach (Person person in AllPersons)
             {
-                string[] rowArray = new string[] { person.Nombre, person.Apellido, person.Username, person.IsAdmin.ToString() };
+                string[] rowArray = new string[] { person.nombre, person.apellido, person.username, person.admin.ToString() };
                 dataGridView1.Rows.Add(rowArray);
             }
 
@@ -82,82 +71,100 @@ namespace Interface
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int index;
-            index = e.RowIndex;
-
-            if (Persons.Count != index && index >= 0)
+            try
             {
-                SelectedPerson = Persons[index];
+                int index;
+                index = e.RowIndex;
+
+                if (Persons.Count != index && index >= 0)
+                {
+                    SelectedPerson = Persons[index];
+                }
+            }
+            catch (Exception ex)
+            {
+                Controladora.HandleException(ex);
             }
         }
 
         private void btnHacerAdmin_Click(object sender, EventArgs e)
         {
-            string path = ruta + nombreArchivo;
-            SelectedPerson.IsAdmin = true;
-            Serializadora.EscribirPersonaXML(path, Persons);
-
-            dataGridView1.Rows.Clear();
-
-            foreach (Person person in Persons)
+            try
             {
-                if (person == SelectedPerson)
+                SelectedPerson.admin = true;
+                PersonCRUD personCRUD = new PersonCRUD();
+                personCRUD.Update(SelectedPerson);
+
+                dataGridView1.Rows.Clear();
+
+                foreach (Person person in Persons)
                 {
-                    person.IsAdmin = true;
+                    if (person == SelectedPerson)
+                    {
+                        person.admin = true;
+                    }
+
+                    string[] rowArray = new string[] { person.nombre, person.apellido, person.username, person.admin.ToString() };
+                    dataGridView1.Rows.Add(rowArray);
                 }
 
-                string[] rowArray = new string[] { person.Nombre, person.Apellido, person.Username, person.IsAdmin.ToString() };
-                dataGridView1.Rows.Add(rowArray);
+                dataGridView1.ClearSelection();
+                dataGridView1.Rows[Persons.IndexOf(SelectedPerson)].Selected = true;
             }
-
-            dataGridView1.ClearSelection();
-            dataGridView1.Rows[Persons.IndexOf(SelectedPerson)].Selected = true;
+            catch (Exception ex)
+            {
+                Controladora.HandleException(ex);
+            }
         }
 
         private void txtBuscarPersona_TextChanged(object sender, EventArgs e)
         {
-            string input = txtBuscarPersona.Text.ToUpper();
-            List<Person> listaFiltrada = new List<Person>();
-
-            Persons = AllPersons;
-            foreach (Person person in Persons)
+            Input = txtBuscarPersona.Text.ToUpper();
+            if(Input != "")
             {
-                if (person.Username.ToUpper().Contains(input) || person.Nombre.ToUpper().Contains(input) || person.Apellido.ToUpper().Contains(input))
-                {
-                    listaFiltrada.Add(person);
-                }
+                Persons = Persons.Filtrar(p => p.username.ToUpper().Contains(Input) || p.nombre.ToUpper().Contains(Input) || p.apellido.ToUpper().Contains(Input));
             }
-            Persons = listaFiltrada;
+            else
+            {
+                Persons = AllPersons;
+            }
 
             dataGridView1.Rows.Clear();
             foreach (Person person in Persons)
             {
-                string[] rowArray = new string[] { person.Nombre, person.Apellido, person.Username, person.IsAdmin.ToString() };
+                string[] rowArray = new string[] { person.nombre, person.apellido, person.username, person.admin.ToString() };
                 dataGridView1.Rows.Add(rowArray);
             }
         }
 
         private void btnEliminarAdmin_Click(object sender, EventArgs e)
         {
-            string path = ruta + nombreArchivo;
-            SelectedPerson.IsAdmin = false;
-            Serializadora.EscribirPersonaXML(path, Persons);
-
-            dataGridView1.Rows.Clear();
-
-            foreach (Person person in Persons)
+            try
             {
-                if (person == SelectedPerson)
+                SelectedPerson.admin = false;
+                PersonCRUD personCRUD = new PersonCRUD();
+                personCRUD.Update(SelectedPerson);
+
+                dataGridView1.Rows.Clear();
+
+                foreach (Person person in Persons)
                 {
-                    person.IsAdmin = false;
+                    if (person == SelectedPerson)
+                    {
+                        person.admin = false;
+                    }
+
+                    string[] rowArray = new string[] { person.nombre, person.apellido, person.username, person.admin.ToString() };
+                    dataGridView1.Rows.Add(rowArray);
                 }
 
-                string[] rowArray = new string[] { person.Nombre, person.Apellido, person.Username, person.IsAdmin.ToString() };
-                dataGridView1.Rows.Add(rowArray);
+                dataGridView1.ClearSelection();
+                dataGridView1.Rows[Persons.IndexOf(SelectedPerson)].Selected = true;
             }
-
-            dataGridView1.ClearSelection();
-            dataGridView1.Rows[Persons.IndexOf(SelectedPerson)].Selected = true;
+            catch (Exception ex)
+            {
+                Controladora.HandleException(ex);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

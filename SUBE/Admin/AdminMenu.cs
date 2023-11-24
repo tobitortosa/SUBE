@@ -1,4 +1,4 @@
-﻿using Entities;
+﻿using Entities.Entidades;
 using Interface.Admin;
 using SUBE;
 using System;

@@ -35,7 +35,6 @@ namespace Interface
             dgvSubes = new DataGridView();
             btnCrearSube = new Button();
             btnEliminarSube = new Button();
-            btnEditarSube = new Button();
             pictureBox1 = new PictureBox();
             lblSaldo = new Label();
             lblUsuarioPropietario = new Label();
@@ -70,7 +69,7 @@ namespace Interface
             // btnCrearSube
             // 
             btnCrearSube.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            btnCrearSube.Location = new Point(451, 418);
+            btnCrearSube.Location = new Point(504, 444);
             btnCrearSube.Name = "btnCrearSube";
             btnCrearSube.Size = new Size(177, 30);
             btnCrearSube.TabIndex = 15;
@@ -81,23 +80,13 @@ namespace Interface
             // btnEliminarSube
             // 
             btnEliminarSube.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            btnEliminarSube.Location = new Point(451, 519);
+            btnEliminarSube.Location = new Point(504, 493);
             btnEliminarSube.Name = "btnEliminarSube";
             btnEliminarSube.Size = new Size(177, 30);
             btnEliminarSube.TabIndex = 16;
             btnEliminarSube.Text = "Eliminar Sube";
             btnEliminarSube.UseVisualStyleBackColor = true;
             btnEliminarSube.Click += btnEliminarSube_Click;
-            // 
-            // btnEditarSube
-            // 
-            btnEditarSube.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            btnEditarSube.Location = new Point(451, 469);
-            btnEditarSube.Name = "btnEditarSube";
-            btnEditarSube.Size = new Size(177, 30);
-            btnEditarSube.TabIndex = 17;
-            btnEditarSube.Text = "Ver Cargas ";
-            btnEditarSube.UseVisualStyleBackColor = true;
             // 
             // pictureBox1
             // 
@@ -154,7 +143,6 @@ namespace Interface
             Controls.Add(lblUsuarioPropietario);
             Controls.Add(lblNumeroSube);
             Controls.Add(pictureBox1);
-            Controls.Add(btnEditarSube);
             Controls.Add(btnEliminarSube);
             Controls.Add(btnCrearSube);
             Controls.Add(dgvSubes);
@@ -176,7 +164,6 @@ namespace Interface
         private DataGridView dgvSubes;
         private Button btnCrearSube;
         private Button btnEliminarSube;
-        private Button btnEditarSube;
         private PictureBox pictureBox1;
         private Label lblSaldo;
         private Label lblUsuarioPropietario;

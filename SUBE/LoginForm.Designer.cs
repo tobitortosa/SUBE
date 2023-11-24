@@ -136,6 +136,7 @@ namespace SUBE
             // rtxtRazon
             // 
             rtxtRazon.BorderStyle = BorderStyle.None;
+            rtxtRazon.Enabled = false;
             rtxtRazon.Location = new Point(12, 288);
             rtxtRazon.Name = "rtxtRazon";
             rtxtRazon.Size = new Size(285, 62);

@@ -6,6 +6,11 @@ using System.Xml.Linq;
 using Interface;
 using System.Windows.Forms;
 using System;
+using System.Diagnostics;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Data.Common;
+using System.Collections.Generic;
+using Entities.Entidades;
 
 namespace SUBE
 {
@@ -36,9 +41,9 @@ namespace SUBE
             try
             {
                 lblError.Visible = false;
-                (logStatus, logPerson) = User.Login(username, password);
+                (logStatus, logPerson) = Controladora.Login(username, password);
 
-                if (txtUser.Text == "superadmin" && txtPassword.Text == "superadmin")
+                if (txtUser.Text == "sa" && txtPassword.Text == "sa")
                 {
                     SuperAdmin superAdmin = new SuperAdmin();
                     superAdmin.Show();
@@ -48,25 +53,26 @@ namespace SUBE
                 {
                     lblError.Visible = true;
                     lblError.Text = "Usuario o Contraseña Incorrectos";
+                    throw new Exception("Usuario o Contraseña Incorrectos");
                 }
-                else if (logPerson.IsBanned)
+                else if (logPerson.ban)
                 {
                     lblError.Visible = true;
                     lblError.Text = "Usuario Baneado";
 
                     lblRazon.Visible = true;
                     rtxtRazon.Visible = true;
-                    rtxtRazon.Text = logPerson.BanText;
+                    rtxtRazon.Text = logPerson.ban_text;
                 }
                 else
                 {
-                    if (logPerson.Username == "sa" && logPerson.Password == "sa")
+                    if (logPerson.username == "sa" && logPerson.password == "sa")
                     {
                         SuperAdmin superAdmin = new SuperAdmin();
                         superAdmin.Show();
                         this.Hide();
                     }
-                    else if (logPerson.IsAdmin)
+                    else if (logPerson.admin)
                     {
                         AdminMenu adminMenu = new AdminMenu(logPerson);
                         adminMenu.Show();
@@ -79,16 +85,12 @@ namespace SUBE
                         this.Hide();
                     }
 
-                    string ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
-                    string nombreArchivo = @"\logPerson.json";
-                    string path = ruta + nombreArchivo;
-
-                    Serializadora.EscribirJson(path, logPerson);
+                    Serializadora<Person>.EscribirJson(logPerson, Paths.LogPerson);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex}");
+                Controladora.HandleException(ex);
             }
 
         }
@@ -105,22 +107,25 @@ namespace SUBE
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            string ruta = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SubeDB";
-            string nombreArchivo = @"\logPerson.json";
-            string path = ruta + nombreArchivo;
-
-            Person logPerson;
-            logPerson = new Person();
-
-            if (!File.Exists(path))
+            try
             {
-                Serializadora.EscribirJson(path, logPerson);
+                Person logPerson;
+                logPerson = new Person();
+
+                if (!File.Exists(Paths.LogPerson))
+                {
+                    Serializadora<Person>.EscribirJson(logPerson, Paths.LogPerson);
+                }
+                else
+                {
+                    logPerson = Serializadora<Person>.LeerJson(Paths.LogPerson);
+                    txtUser.Text = logPerson.username;
+                    txtPassword.Text = logPerson.password;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                logPerson = Serializadora.LeerJson(path);
-                txtUser.Text = logPerson.Username;
-                txtPassword.Text = logPerson.Password;
+                Controladora.HandleException(ex);
             }
         }
     }

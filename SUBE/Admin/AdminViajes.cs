@@ -1,4 +1,6 @@
 ﻿using Entities;
+using Entities.CRUDs;
+using Entities.Entidades;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,11 +15,14 @@ namespace Interface.Admin
 {
     public partial class AdminViajes : Form
     {
+        private Person Persona {  get; set; }
         public AdminViajes(Person persona)
         {
             InitializeComponent();
 
-            lblNombreCompleto.Text = persona.Nombre + " " + persona.Apellido;
+            Persona = persona;
+
+            lblNombreCompleto.Text = persona.nombre + " " + persona.apellido;
 
             dgvViajes.ColumnCount = 5;
 
@@ -46,13 +51,22 @@ namespace Interface.Admin
 
             dgvViajes.CellBorderStyle = DataGridViewCellBorderStyle.None;
 
+            ViajeCRUD viajeCRUD = new ViajeCRUD();
+            List<Viaje> viajes = viajeCRUD.GetByFK(persona.username);
 
-            foreach (Viaje viaje in persona.ListaViajes)
+            foreach (Viaje viaje in viajes)
             {
-                string[] rowArray = new string[] { viaje.Fecha.ToString(), viaje.Origen, viaje.Destino, "$" + viaje.Costo.ToString(), "$" + viaje.SaldoAnterior.ToString() };
+                string[] rowArray = new string[] { viaje.fecha.ToString(), viaje.origen, viaje.destino, "$" + viaje.costo.ToString(), "$" + viaje.saldoAnterior.ToString() };
 
                 dgvViajes.Rows.Add(rowArray);
             }
+        }
+
+        private void btnImprimir_Click(object sender, EventArgs e)
+        {
+            ViajeCRUD viajeCRUD = new ViajeCRUD();
+            List<Viaje> viajes = viajeCRUD.GetByFK(Persona.username);
+            Serializadora<Viaje>.EscribirXML(Paths.InformeViajes, viajes);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Entities;
+using Entities.CRUDs;
+using Entities.Entidades;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,12 +16,13 @@ namespace Interface.Admin
 {
     public partial class AdminUsers : Form
     {
-        private List<Person> _persons;
-        private Person _selectedPerson;
+        private List<Person> Persons { get; set; }
+        private Person SelectedPerson { get; set; }
         public AdminUsers()
         {
             InitializeComponent();
-            Persons = Person.ListaCompleta();
+
+            Persons = Select<Person>.SelectAll("person");
 
             dgvUsers.ColumnCount = 6;
 
@@ -62,90 +65,117 @@ namespace Interface.Admin
 
         private void PrintGrid(List<Person> lista)
         {
-            dgvUsers.Rows.Clear();
-            foreach (Person person in lista)
+            try
             {
-                string ban;
-                string admin;
-
-                ban = "";
-                admin = "";
-
-                if (person.IsBanned)
+                dgvUsers.Rows.Clear();
+                foreach (Person person in lista)
                 {
-                    ban = "Si";
-                }
+                    string ban;
+                    string admin;
 
-                if (person.IsAdmin)
-                {
-                    admin = "Si";
-                }
+                    ban = "";
+                    admin = "";
 
-                string[] rowArray = new string[] { person.Nombre, person.Apellido, person.Username, person.Email, admin, ban };
-                dgvUsers.Rows.Add(rowArray);
+                    if (person.ban)
+                    {
+                        ban = "Si";
+                    }
+
+                    if (person.admin)
+                    {
+                        admin = "Si";
+                    }
+
+                    string[] rowArray = new string[] { person.nombre, person.apellido, person.username, person.email, admin, ban };
+                    dgvUsers.Rows.Add(rowArray);
+                }
+            }
+            catch (Exception ex)
+            {
+                Controladora.HandleException(ex);
             }
         }
 
         private void PrintPerson(Person persona)
         {
-            lblUltimoViaje.Visible = true;
-            lblSubesActivadas.Visible = true;
-            lblTarjetasActivadasTitle.Visible = true;
-            lblUltimoViajeTitle.Visible = true;
-            btnBanearUsuario.Enabled = true;
-            btnVerViajes.Enabled = true;
-            btnModificarUsuario.Enabled = true;
+            try
+            {
+                lblUltimoViaje.Visible = true;
+                lblSubesActivadas.Visible = true;
+                lblTarjetasActivadasTitle.Visible = true;
+                lblUltimoViajeTitle.Visible = true;
+                btnBanearUsuario.Enabled = true;
+                btnVerViajes.Enabled = true;
 
-            lblNombre.Text = persona.Nombre;
-            lblApellido.Text = persona.Apellido;
-            lblEmail.Text = persona.Email;
-            lblUsername.Text = persona.Username;
-            cbAdmin.Checked = persona.IsAdmin;
-            lblSubesActivadas.Text = persona.ListaSube.Count().ToString();
+                lblNombre.Text = persona.nombre;
+                lblApellido.Text = persona.apellido;
+                lblEmail.Text = persona.email;
+                lblUsername.Text = persona.username;
+                cbAdmin.Checked = persona.admin;
 
-            if (persona.ListaViajes.Count() > 0)
-            {
-                lblUltimoViaje.Text = $"{persona.ListaViajes[persona.ListaViajes.Count() - 1].Origen} - {persona.ListaViajes[persona.ListaViajes.Count() - 1]?.Destino}";
+                SubeCRUD subeCRUD = new SubeCRUD();
+                List<Sube> subes = subeCRUD.GetByFK(persona.username);
+
+                lblSubesActivadas.Text = subes.Count().ToString();
+
+                if (subes.Count() > 0)
+                {
+                    ViajeCRUD viajeCRUD = new ViajeCRUD();
+                    List<Viaje> viajes = viajeCRUD.GetByFK(persona.username);
+
+                    lblUltimoViaje.Text = $"{viajes[viajes.Count() - 1].origen} - {viajes[viajes.Count() - 1].destino}";
+                }
+                else
+                {
+                    lblUltimoViaje.Text = "No realizo ningun viaje";
+                }
+
+                if (persona.admin)
+                {
+                    lblUltimoViaje.Visible = false;
+                    lblSubesActivadas.Visible = false;
+                    lblTarjetasActivadasTitle.Visible = false;
+                    lblUltimoViajeTitle.Visible = false;
+                    btnBanearUsuario.Enabled = false;
+                    btnVerViajes.Enabled = false;
+                }
+
+                if (persona.ban)
+                {
+                    btnBanearUsuario.Text = "Desbanear Usuario";
+                    lblBaneado.Visible = true;
+                }
+                else
+                {
+                    btnBanearUsuario.Text = "Banear Usuario";
+                    lblBaneado.Visible = false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                lblUltimoViaje.Text = "No realizo ningun viaje";
+                Controladora.HandleException(ex);
             }
 
-            if (persona.IsAdmin)
-            {
-                lblUltimoViaje.Visible = false;
-                lblSubesActivadas.Visible = false;
-                lblTarjetasActivadasTitle.Visible = false;
-                lblUltimoViajeTitle.Visible = false;
-                btnBanearUsuario.Enabled = false;
-                btnVerViajes.Enabled = false;
-                btnModificarUsuario.Enabled = false;
-            }
-
-            if (persona.IsBanned)
-            {
-                btnBanearUsuario.Text = "Desbanear Usuario";
-                lblBaneado.Visible = true;
-            }
-            else
-            {
-                btnBanearUsuario.Text = "Banear Usuario";
-                lblBaneado.Visible = false;
-            }
         }
 
         private void dgvUsers_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            int index;
-            index = e.RowIndex;
-
-            if (index >= 0)
+            try
             {
-                Console.WriteLine("entro");
-                SelectedPerson = Persons[index];
+                int index;
+                index = e.RowIndex;
+
+                if (index >= 0)
+                {
+                    SelectedPerson = Persons[index];
+                }
+                PrintPerson(SelectedPerson);
             }
-            PrintPerson(SelectedPerson);
+            catch (Exception ex)
+            {
+                Controladora.HandleException(ex);
+            }
+
         }
 
         private void btnVerViajes_Click(object sender, EventArgs e)
@@ -156,43 +186,48 @@ namespace Interface.Admin
 
         private void btnBanearUsuario_Click(object sender, EventArgs e)
         {
-            if (SelectedPerson.IsBanned)
+            try
             {
-                UnbanDialog unban = new UnbanDialog(SelectedPerson);
-                unban.ShowDialog();
-
-                if (unban.DialogResult == DialogResult.OK)
+                if (SelectedPerson.ban)
                 {
-                    Persons = Person.ListaCompleta();
-                    PrintGrid(Persons);
-                    SelectedPerson = Persons[0];
-                    PrintPerson(SelectedPerson);
+                    UnbanDialog unban = new UnbanDialog(SelectedPerson);
+                    unban.ShowDialog();
+
+                    if (unban.DialogResult == DialogResult.OK)
+                    {
+                        Persons = Select<Person>.SelectAll("person");
+                        PrintGrid(Persons);
+                        SelectedPerson = Persons[0];
+                        PrintPerson(SelectedPerson);
+                    }
+                    else
+                    {
+                        unban.Close();
+                    }
                 }
                 else
                 {
-                    unban.Close();
-                }
-            }
-            else
-            {
-                BanDialog ban = new BanDialog(SelectedPerson);
-                ban.ShowDialog();
+                    BanDialog ban = new BanDialog(SelectedPerson);
+                    ban.ShowDialog();
 
-                if (ban.DialogResult == DialogResult.OK)
-                {
-                    Persons = Person.ListaCompleta();
-                    PrintGrid(Persons);
-                    SelectedPerson = Persons[0];
-                    PrintPerson(SelectedPerson);
-                }
-                else
-                {
-                    ban.Close();
+                    if (ban.DialogResult == DialogResult.OK)
+                    {
+                        Persons = Select<Person>.SelectAll("person");
+                        PrintGrid(Persons);
+                        SelectedPerson = Persons[0];
+                        PrintPerson(SelectedPerson);
+                    }
+                    else
+                    {
+                        ban.Close();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Controladora.HandleException(ex);
+            }
+
         }
-
-        public List<Person> Persons { get => _persons; set => _persons = value; }
-        public Person SelectedPerson { get => _selectedPerson; set => _selectedPerson = value; }
     }
 }
