@@ -37,13 +37,14 @@ namespace Interface
             activarSubeToolStripMenuItem = new ToolStripMenuItem();
             viajarToolStripMenuItem = new ToolStripMenuItem();
             configuracionToolStripMenuItem = new ToolStripMenuItem();
+            contactoToolStripMenuItem = new ToolStripMenuItem();
             cerrarSecionToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem, activarSubeToolStripMenuItem, viajarToolStripMenuItem, configuracionToolStripMenuItem, cerrarSecionToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { menuToolStripMenuItem, activarSubeToolStripMenuItem, viajarToolStripMenuItem, configuracionToolStripMenuItem, contactoToolStripMenuItem, cerrarSecionToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 24);
@@ -53,8 +54,8 @@ namespace Interface
             // menuToolStripMenuItem
             // 
             menuToolStripMenuItem.Name = "menuToolStripMenuItem";
-            menuToolStripMenuItem.Size = new Size(50, 20);
-            menuToolStripMenuItem.Text = "Menu";
+            menuToolStripMenuItem.Size = new Size(132, 20);
+            menuToolStripMenuItem.Text = "Informacion Personal";
             menuToolStripMenuItem.Click += menuToolStripMenuItem_Click;
             // 
             // activarSubeToolStripMenuItem
@@ -77,6 +78,13 @@ namespace Interface
             configuracionToolStripMenuItem.Size = new Size(95, 20);
             configuracionToolStripMenuItem.Text = "Configuracion";
             configuracionToolStripMenuItem.Click += configuracionToolStripMenuItem_Click;
+            // 
+            // contactoToolStripMenuItem
+            // 
+            contactoToolStripMenuItem.Name = "contactoToolStripMenuItem";
+            contactoToolStripMenuItem.Size = new Size(68, 20);
+            contactoToolStripMenuItem.Text = "Contacto";
+            contactoToolStripMenuItem.Click += contactoToolStripMenuItem_Click;
             // 
             // cerrarSecionToolStripMenuItem
             // 
@@ -112,5 +120,6 @@ namespace Interface
         private ToolStripMenuItem viajarToolStripMenuItem;
         private ToolStripMenuItem cerrarSecionToolStripMenuItem;
         private ToolStripMenuItem configuracionToolStripMenuItem;
+        private ToolStripMenuItem contactoToolStripMenuItem;
     }
 }

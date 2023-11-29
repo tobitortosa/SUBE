@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace Interface
 
             try
             {
-                Settings = Controladora.HandleLeerConfig(Persona);
+                Settings = ControladoraAdmin.HandleLeerConfig(Persona);
 
                 if (Settings != null)
                 {
@@ -53,7 +54,7 @@ namespace Interface
             {
                 panelFondo.BackColor = cd.Color;
                 Controladora.HandleEscribirConfig(cd.Color, Persona, true);
-                Settings = Controladora.HandleLeerConfig(Persona);
+                Settings = ControladoraAdmin.HandleLeerConfig(Persona);
             }
         }
 
@@ -69,7 +70,35 @@ namespace Interface
                 panelFuente.BackColor = cd.Color;
                 Controladora.HandleEscribirConfig(cd.Color, Persona, false);
 
-                Settings = Controladora.HandleLeerConfig(Persona);
+                Settings = ControladoraAdmin.HandleLeerConfig(Persona);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "jpg files(*.jpg)|*.jpg| PNG files(*.png)|*.png| All Files(*.*)|*.*";
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    pictureBox1.ImageLocation = dialog.FileName.ToString();
+                    string path = Path.Combine(@"-\image\");
+
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    var fileName = Path.GetFileName(dialog.FileName);
+                    path = path + fileName;
+                    File.Copy(dialog.FileName, path);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrio un error", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Controladora.HandleException(ex);
             }
         }
     }

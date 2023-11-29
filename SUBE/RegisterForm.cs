@@ -49,6 +49,19 @@ namespace Interface.Forms
 
             HandleRegister(name, lastName, username, email, password, repeatedPassword);
         }
+
+
+        public delegate void RegistroEventHandler(Person persona);
+        public event RegistroEventHandler Registrado;
+        protected virtual void OnRegistro(Person persona)
+        {
+            if (Registrado != null)
+            {
+                Registrado(persona);
+            }
+        }
+
+
         private void HandleRegister(string name, string lastName, string username, string email, string password, string repeatedPassword)
         {
             try
@@ -80,8 +93,6 @@ namespace Interface.Forms
                     PersonCRUD personCrud = new PersonCRUD();
                     bool res = personCrud.Insert(newPerson);
 
-                    Controladora.HandleCreateConfig(newPerson);
-
                     try
                     {
                         if (!res)
@@ -91,6 +102,10 @@ namespace Interface.Forms
 
                         else
                         {
+                            ControladoraAdmin controlAdmin = new ControladoraAdmin();
+                            Registrado += controlAdmin.HandleCreateConfig;
+                            OnRegistro(newPerson);
+
                             LoginForm loginForm = new LoginForm();
                             loginForm.Show();
                             this.Hide();

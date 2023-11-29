@@ -10,7 +10,7 @@ namespace Interface
 {
     public partial class UserDetails : Form
     {
-        private Person _persona;
+        private Person Persona;
         public UserDetails(Person persona, Action<Control> PaintLabel, Config settings)
         {
             InitializeComponent();
@@ -55,7 +55,12 @@ namespace Interface
             }
         }
 
-        private void PrintSube1(Sube sube)
+        public void TraerPersona(Person persona)
+        {
+            Persona = persona;
+        }
+
+    private void PrintSube1(Sube sube)
         {
             pbSube.Visible = true;
 
@@ -123,7 +128,5 @@ namespace Interface
         private void lblUsername_Click(object sender, System.EventArgs e)
         {
         }
-
-        public Person Persona { get => _persona; set => _persona = value; }
     }
 }

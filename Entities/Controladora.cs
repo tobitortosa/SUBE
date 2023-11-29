@@ -18,7 +18,7 @@ namespace Entities
         public static Config GetConfig(Person persona)
         {
             Config config;
-            config = HandleLeerConfig(persona);
+            config = ControladoraAdmin.HandleLeerConfig(persona);
             return config;
         }
 
@@ -50,62 +50,6 @@ namespace Entities
             {
                 HandleException(ex);
             }
-        }
-
-        public static void HandleCreateConfig(Person persona)
-        {
-            HandleConfigExist();
-            List<Config> lista;
-            List<Config> listaFiltrada;
-
-            lista = Serializadora<List<Config>>.LeerJson(Paths.Configuracion);
-            listaFiltrada = new List<Config>();
-
-            Config config = new Config(ConfigDefault.BackDefaultColor, ConfigDefault.FontDefaultColor, persona.username);
-
-            foreach (Config con in lista)
-            {
-                if(con.Username == persona.username)
-                {
-                    listaFiltrada.Add(con);
-                }
-            }
-
-            if(listaFiltrada.Count == 0)
-            {
-                lista.Add(config);
-            }
-
-            Serializadora<List<Config>>.EscribirJson(lista, Paths.Configuracion);
-        }
-
-        public static void HandleConfigExist()
-        {
-            if (!File.Exists(Paths.Configuracion))
-            {
-                List<Config> config = new List<Config>();
-                Serializadora<List<Config>>.EscribirJson(config, Paths.Configuracion);
-            }
-        }
-
-        public static Config HandleLeerConfig(Person persona)
-        {
-
-            Config config;
-            List<Config> lista;
-            config = null;
-
-            lista = Serializadora<List<Config>>.LeerJson(Paths.Configuracion);
-
-            foreach (Config configuracion in lista)
-            {
-                if (configuracion.Username == persona.username)
-                {
-                    config = configuracion;
-                }
-            }
-
-            return config; 
         }
 
         public static void HandleException(Exception ex)

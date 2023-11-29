@@ -26,7 +26,7 @@ namespace Interface.Admin
                 InitializeComponent();
 
                 NumeroTarjeta = ControladoraAdmin.CrearCodigoTarjeta().Trim();
-                NumeroTarjeta = "7887 2615 8248 2826";
+                //NumeroTarjeta = "1582 6332 7583 3225";
                 CodigoDeSeguridad = ControladoraAdmin.CrearCodigoSeguridad();
 
                 List<Sube> listaCompleta;

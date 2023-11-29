@@ -23,31 +23,24 @@ namespace Interface
         private UserDetails _userDetails;
         private ActivarSube _activarSube;
         private ViajarMenu _viajarMenu;
-        private Person _person;
+        private Person Persona;
         private List<Person> _listaPersonas;
         private Configuracion _configuracion;
-        private Config _settings;
+        private Config Settings;
+        private Contacto _contacto;
 
-        public Menu(Person person)
+        public Menu()
         {
             InitializeComponent();
-
             IsMdiContainer = true;
+            MenuInicial menuInicial = new MenuInicial();
+            menuInicial.MdiParent = this;
+            menuInicial.Show();
+        }
 
-            Person = person;
-            Settings = Controladora.HandleLeerConfig(Person);
-
-            UserDetails = new UserDetails(Person, PaintLabel, Settings);
-            ActivarSube = new ActivarSube(Person, PaintLabel, Settings);
-            ViajarMenu = new ViajarMenu(Person, PaintLabel, Settings);
-            Configuracion = new Configuracion(Person);
-
-            UserDetails.MdiParent = this;
-            ActivarSube.MdiParent = this;
-            ViajarMenu.MdiParent = this;
-            Configuracion.MdiParent = this;
-
-            UserDetails.Show();
+        public void RecivirPersona(Person persona)
+        {
+            this.Persona = persona;
         }
 
         public void PaintLabel(Control control)
@@ -71,11 +64,11 @@ namespace Interface
             try
             {
                 PersonCRUD personCRUD = new PersonCRUD();
-                Person = personCRUD.GetByPK(Person.username);
+                Persona = personCRUD.GetByPK(Persona.username);
 
-                Settings = Controladora.HandleLeerConfig(Person);
+                Settings = ControladoraAdmin.HandleLeerConfig(Persona);
 
-                ActivarSube = new ActivarSube(Person, PaintLabel, Settings);
+                ActivarSube = new ActivarSube(Persona, PaintLabel, Settings);
                 ActivarSube.MdiParent = this;
                 ActivarSube.Show();
             }
@@ -90,11 +83,11 @@ namespace Interface
             try
             {
                 PersonCRUD personCRUD = new PersonCRUD();
-                Person = personCRUD.GetByPK(Person.username);
+                Persona = personCRUD.GetByPK(Persona.username);
 
-                Settings = Controladora.HandleLeerConfig(Person);
+                Settings = ControladoraAdmin.HandleLeerConfig(Persona);
 
-                UserDetails = new UserDetails(Person, PaintLabel, Settings);
+                UserDetails = new UserDetails(Persona, PaintLabel, Settings);
                 UserDetails.MdiParent = this;
                 UserDetails.Show();
             }
@@ -109,11 +102,11 @@ namespace Interface
             try
             {
                 PersonCRUD personCRUD = new PersonCRUD();
-                Person = personCRUD.GetByPK(Person.username);
+                Persona = personCRUD.GetByPK(Persona.username);
 
-                Settings = Controladora.HandleLeerConfig(Person);
+                Settings = ControladoraAdmin.HandleLeerConfig(Persona);
 
-                ViajarMenu = new ViajarMenu(Person, PaintLabel, Settings);
+                ViajarMenu = new ViajarMenu(Persona, PaintLabel, Settings);
                 ViajarMenu.MdiParent = this;
                 ViajarMenu.Show();
             }
@@ -142,11 +135,11 @@ namespace Interface
             try
             {
                 PersonCRUD personCRUD = new PersonCRUD();
-                Person = personCRUD.GetByPK(Person.username);
+                Persona = personCRUD.GetByPK(Persona.username);
 
-                Settings = Controladora.HandleLeerConfig(Person);
+                Settings = ControladoraAdmin.HandleLeerConfig(Persona);
 
-                Configuracion = new Configuracion(Person);
+                Configuracion = new Configuracion(Persona);
                 Configuracion.MdiParent = this;
                 Configuracion.Show();
             }
@@ -156,12 +149,30 @@ namespace Interface
             }
         }
 
-        public Person Person { get => _person; set => _person = value; }
+        private void contactoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                PersonCRUD personCRUD = new PersonCRUD();
+                Persona = personCRUD.GetByPK(Persona.username);
+
+                Settings = ControladoraAdmin.HandleLeerConfig(Persona);
+
+                Contacto = new Contacto(Persona, PaintLabel, Settings);
+                Contacto.MdiParent = this;
+                Contacto.Show();
+            }
+            catch (Exception ex)
+            {
+                Controladora.HandleException(ex);
+            }
+        }
+
         public UserDetails UserDetails { get => _userDetails; set => _userDetails = value; }
         public ActivarSube ActivarSube { get => _activarSube; set => _activarSube = value; }
         public List<Person> ListaPersonas { get => _listaPersonas; set => _listaPersonas = value; }
         public ViajarMenu ViajarMenu { get => _viajarMenu; set => _viajarMenu = value; }
+        public Contacto Contacto { get => _contacto; set => _contacto = value; }
         public Configuracion Configuracion { get => _configuracion; set => _configuracion = value; }
-        public Config Settings { get => _settings; set => _settings = value; }
     }
 }

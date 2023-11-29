@@ -35,8 +35,13 @@
             groupBox2 = new System.Windows.Forms.GroupBox();
             cambiarFColor = new System.Windows.Forms.Button();
             panelFuente = new System.Windows.Forms.Panel();
+            groupBox3 = new System.Windows.Forms.GroupBox();
+            button1 = new System.Windows.Forms.Button();
+            pictureBox1 = new System.Windows.Forms.PictureBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
+            groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -106,11 +111,42 @@
             panelFuente.Size = new System.Drawing.Size(30, 30);
             panelFuente.TabIndex = 1;
             // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(button1);
+            groupBox3.Controls.Add(pictureBox1);
+            groupBox3.Location = new System.Drawing.Point(12, 186);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new System.Drawing.Size(200, 192);
+            groupBox3.TabIndex = 6;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Imagen de Fondo";
+            // 
+            // button1
+            // 
+            button1.Location = new System.Drawing.Point(6, 159);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(188, 23);
+            button1.TabIndex = 1;
+            button1.Text = "Seleccionar Imagen";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new System.Drawing.Point(6, 22);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new System.Drawing.Size(188, 117);
+            pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            // 
             // Configuracion
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(760, 410);
+            Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(label1);
@@ -120,6 +156,8 @@
             Text = "Configuracion";
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
+            groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -132,5 +170,8 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button cambiarFColor;
         private System.Windows.Forms.Panel panelFuente;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button button1;
     }
 }

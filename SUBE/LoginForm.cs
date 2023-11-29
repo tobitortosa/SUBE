@@ -11,11 +11,13 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.Data.Common;
 using System.Collections.Generic;
 using Entities.Entidades;
+using System.Threading.Tasks;
 
 namespace SUBE
 {
     public partial class LoginForm : Form
     {
+        Action<Person> pasarPersona;
         public LoginForm()
         {
             InitializeComponent();
@@ -28,7 +30,7 @@ namespace SUBE
             this.Hide();
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
             string username;
             string password;
@@ -37,6 +39,8 @@ namespace SUBE
 
             username = txtUser.Text;
             password = txtPassword.Text;
+            
+            Menu menu = new Menu();
 
             try
             {
@@ -80,7 +84,7 @@ namespace SUBE
                     }
                     else
                     {
-                        Menu menu = new Menu(logPerson);
+                        await Task.Run(() => SuscribirEvento(menu, logPerson));
                         menu.Show();
                         this.Hide();
                     }
@@ -92,9 +96,38 @@ namespace SUBE
             {
                 Controladora.HandleException(ex);
             }
+            finally
+            {
+                await Task.Run(() => DesuscribirEvento(menu));
+            }
 
         }
 
+        private void SuscribirEvento(Menu menu, Person persona)
+        {
+            try
+            {
+                pasarPersona += menu.RecivirPersona;
+                pasarPersona(persona);
+            }
+            catch (Exception ex)
+            {
+                Controladora.HandleException(ex);
+            }
+        }
+
+        private void DesuscribirEvento(Menu menu)
+        {
+            try
+            {
+                pasarPersona -= menu.RecivirPersona;
+
+            }
+            catch (Exception ex)
+            {
+                Controladora.HandleException(ex);
+            }
+        }
         private void txtUser_TextChanged(object sender, EventArgs e)
         {
             lblError.Text = "";

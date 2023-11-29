@@ -199,18 +199,14 @@ namespace Interface
             }
             else
             {
+                ControladoraAdmin controlAdmin = new ControladoraAdmin();   
+                controlAdmin.TarjetaActivada += controlAdmin.EnvioMailTarjetaActivada;
+                bool res = controlAdmin.ActivarTarjeta(Persona, ListaFiltrada);
 
-                SubeCRUD subeCRUD = new SubeCRUD();
-                List<Sube> listaSubes = subeCRUD.GetByFK(Persona.username);
-
-                if (listaSubes.Count <= 4)
+                if (res)
                 {
-                    ListaFiltrada[0].activada = true;
-                    ListaFiltrada[0].person_username = Persona.username;
-
-                    subeCRUD.Update(ListaFiltrada[0]);
-                    lblActivada.Visible = true;
                     lblActivada.Text = "Tarjeta Activada";
+                    lblActivada.Visible = true;
                 }
                 else
                 {
